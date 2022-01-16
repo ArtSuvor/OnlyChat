@@ -50,8 +50,9 @@ extension SignUpViewController {
         loginButton.contentHorizontalAlignment = .leading
         bottomStackView = UIStackView(arrangedSubviews: [alreadyLabel, loginButton], axis: .horizontal, spacing: 10)
         bottomStackView.alignment = .firstBaseline
-
         allStackView = UIStackView(arrangedSubviews: [emailStack, passwordStack, confirmPasStack, signUpButton], axis: .vertical, spacing: 20)
+        
+        view.backgroundColor = .mainWhite()
         view.addSubview(logoLabel)
         view.addSubview(allStackView)
         view.addSubview(bottomStackView)

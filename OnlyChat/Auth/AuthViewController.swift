@@ -30,6 +30,7 @@ class AuthViewController: UIViewController {
     
 //MARK: - SetViews
     private func setViews() {
+        view.backgroundColor = .mainWhite()
         view.addSubview(logoImageView)
         let googleView = ButtonFormView(label: googleLabel, button: googleButton)
         let emailView = ButtonFormView(label: emailLabel, button: emailButton)

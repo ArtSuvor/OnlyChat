@@ -12,6 +12,7 @@ class OneLineTextField: UITextField {
         self.init()
         self.font = font
         self.borderStyle = .none
+        self.textColor = .black
         
         let botView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         botView.backgroundColor = .buttonDark()

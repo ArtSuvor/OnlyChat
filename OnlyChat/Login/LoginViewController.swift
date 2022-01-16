@@ -51,6 +51,7 @@ class LoginViewController: UIViewController {
         bottomStackView.alignment = .firstBaseline
         googleButton.customGoogleButton()
         
+        view.backgroundColor = .mainWhite()
         view.addSubview(logoLabel)
         view.addSubview(allStackView)
         view.addSubview(bottomStackView)

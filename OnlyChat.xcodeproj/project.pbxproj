@@ -24,6 +24,7 @@
 		6E43A25D27949EA50053C86E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A25C27949EA50053C86E /* LoginViewController.swift */; };
 		6E43A2602794A5970053C86E /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A25F2794A5960053C86E /* SetupViewController.swift */; };
 		6E43A2622794A7A50053C86E /* AddPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2612794A7A50053C86E /* AddPhotoView.swift */; };
+		6E43A2642794AD900053C86E /* UISegmentedControl+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2632794AD900053C86E /* UISegmentedControl+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		6E43A25C27949EA50053C86E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6E43A25F2794A5960053C86E /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		6E43A2612794A7A50053C86E /* AddPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoView.swift; sourceTree = "<group>"; };
+		6E43A2632794AD900053C86E /* UISegmentedControl+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				6E43A24C27945E1C0053C86E /* UILabel+Ext.swift */,
 				6E43A24E27945F160053C86E /* UIImageView+Ext.swift */,
 				6E43A2542794691E0053C86E /* UIStackView+Ext.swift */,
+				6E43A2632794AD900053C86E /* UISegmentedControl+Ext.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				6E43A24627944FFB0053C86E /* UIButton+Ext.swift in Sources */,
 				6E43A248279451C30053C86E /* UIFont+Ext.swift in Sources */,
 				6E43A25D27949EA50053C86E /* LoginViewController.swift in Sources */,
+				6E43A2642794AD900053C86E /* UISegmentedControl+Ext.swift in Sources */,
 				6E43A24D27945E1C0053C86E /* UILabel+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
