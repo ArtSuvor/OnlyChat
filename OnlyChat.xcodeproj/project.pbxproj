@@ -9,19 +9,29 @@
 /* Begin PBXBuildFile section */
 		6E43A2302794480C0053C86E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A22F2794480C0053C86E /* AppDelegate.swift */; };
 		6E43A2322794480C0053C86E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2312794480C0053C86E /* SceneDelegate.swift */; };
-		6E43A2342794480C0053C86E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2332794480C0053C86E /* ViewController.swift */; };
+		6E43A2342794480C0053C86E /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2332794480C0053C86E /* AuthViewController.swift */; };
 		6E43A2392794480F0053C86E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E43A2382794480F0053C86E /* Assets.xcassets */; };
 		6E43A23C2794480F0053C86E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E43A23A2794480F0053C86E /* LaunchScreen.storyboard */; };
+		6E43A24627944FFB0053C86E /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A24527944FFB0053C86E /* UIButton+Ext.swift */; };
+		6E43A248279451C30053C86E /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A247279451C30053C86E /* UIFont+Ext.swift */; };
+		6E43A24A279452740053C86E /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A249279452740053C86E /* UIColor+Ext.swift */; };
+		6E43A24D27945E1C0053C86E /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A24C27945E1C0053C86E /* UILabel+Ext.swift */; };
+		6E43A24F27945F160053C86E /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A24E27945F160053C86E /* UIImageView+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6E43A22C2794480C0053C86E /* OnlyChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlyChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E43A22F2794480C0053C86E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E43A2312794480C0053C86E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6E43A2332794480C0053C86E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6E43A2332794480C0053C86E /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		6E43A2382794480F0053C86E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E43A23B2794480F0053C86E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6E43A23D2794480F0053C86E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6E43A24527944FFB0053C86E /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
+		6E43A247279451C30053C86E /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
+		6E43A249279452740053C86E /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		6E43A24C27945E1C0053C86E /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		6E43A24E27945F160053C86E /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +64,35 @@
 		6E43A22E2794480C0053C86E /* OnlyChat */ = {
 			isa = PBXGroup;
 			children = (
+				6E43A24427944FE70053C86E /* Extension */,
+				6E43A24327944F1F0053C86E /* Auth */,
 				6E43A22F2794480C0053C86E /* AppDelegate.swift */,
 				6E43A2312794480C0053C86E /* SceneDelegate.swift */,
-				6E43A2332794480C0053C86E /* ViewController.swift */,
 				6E43A2382794480F0053C86E /* Assets.xcassets */,
 				6E43A23A2794480F0053C86E /* LaunchScreen.storyboard */,
 				6E43A23D2794480F0053C86E /* Info.plist */,
 			);
 			path = OnlyChat;
+			sourceTree = "<group>";
+		};
+		6E43A24327944F1F0053C86E /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				6E43A2332794480C0053C86E /* AuthViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		6E43A24427944FE70053C86E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				6E43A24527944FFB0053C86E /* UIButton+Ext.swift */,
+				6E43A247279451C30053C86E /* UIFont+Ext.swift */,
+				6E43A249279452740053C86E /* UIColor+Ext.swift */,
+				6E43A24C27945E1C0053C86E /* UILabel+Ext.swift */,
+				6E43A24E27945F160053C86E /* UIImageView+Ext.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,9 +165,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E43A2342794480C0053C86E /* ViewController.swift in Sources */,
+				6E43A24F27945F160053C86E /* UIImageView+Ext.swift in Sources */,
+				6E43A2342794480C0053C86E /* AuthViewController.swift in Sources */,
 				6E43A2302794480C0053C86E /* AppDelegate.swift in Sources */,
 				6E43A2322794480C0053C86E /* SceneDelegate.swift in Sources */,
+				6E43A24A279452740053C86E /* UIColor+Ext.swift in Sources */,
+				6E43A24627944FFB0053C86E /* UIButton+Ext.swift in Sources */,
+				6E43A248279451C30053C86E /* UIFont+Ext.swift in Sources */,
+				6E43A24D27945E1C0053C86E /* UILabel+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
