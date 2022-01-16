@@ -21,12 +21,14 @@ class AuthViewController: UIViewController {
     private let emailButton = UIButton(title: "Email", titleColor: .mainWhite(), backgroundColor: .buttonDark())
     private let loginButton = UIButton(title: "Login", titleColor: .buttonRed(), backgroundColor: .mainWhite(), isShadow: true)
 
+//MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setViews()
         setConstraints()
     }
     
+//MARK: - SetViews
     private func setViews() {
         view.addSubview(logoImageView)
         let googleView = ButtonFormView(label: googleLabel, button: googleButton)

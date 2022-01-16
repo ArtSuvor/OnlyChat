@@ -19,6 +19,8 @@
 		6E43A24F27945F160053C86E /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A24E27945F160053C86E /* UIImageView+Ext.swift */; };
 		6E43A253279464780053C86E /* ButtonFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A252279464780053C86E /* ButtonFormView.swift */; };
 		6E43A2552794691E0053C86E /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2542794691E0053C86E /* UIStackView+Ext.swift */; };
+		6E43A25827946B840053C86E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A25727946B840053C86E /* SignUpViewController.swift */; };
+		6E43A25A27946E250053C86E /* OneLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A25927946E250053C86E /* OneLineTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		6E43A24E27945F160053C86E /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 		6E43A252279464780053C86E /* ButtonFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFormView.swift; sourceTree = "<group>"; };
 		6E43A2542794691E0053C86E /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
+		6E43A25727946B840053C86E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		6E43A25927946E250053C86E /* OneLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,7 @@
 				6E43A2512794645A0053C86E /* CustomElements */,
 				6E43A24427944FE70053C86E /* Extension */,
 				6E43A24327944F1F0053C86E /* Auth */,
+				6E43A25627946B660053C86E /* SignUp */,
 				6E43A22F2794480C0053C86E /* AppDelegate.swift */,
 				6E43A2312794480C0053C86E /* SceneDelegate.swift */,
 				6E43A2382794480F0053C86E /* Assets.xcassets */,
@@ -113,8 +118,17 @@
 			isa = PBXGroup;
 			children = (
 				6E43A252279464780053C86E /* ButtonFormView.swift */,
+				6E43A25927946E250053C86E /* OneLineTextField.swift */,
 			);
 			path = CustomElements;
+			sourceTree = "<group>";
+		};
+		6E43A25627946B660053C86E /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				6E43A25727946B840053C86E /* SignUpViewController.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +201,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E43A25A27946E250053C86E /* OneLineTextField.swift in Sources */,
+				6E43A25827946B840053C86E /* SignUpViewController.swift in Sources */,
 				6E43A24F27945F160053C86E /* UIImageView+Ext.swift in Sources */,
 				6E43A2552794691E0053C86E /* UIStackView+Ext.swift in Sources */,
 				6E43A2342794480C0053C86E /* AuthViewController.swift in Sources */,
