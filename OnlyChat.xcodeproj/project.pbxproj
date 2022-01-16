@@ -17,6 +17,8 @@
 		6E43A24A279452740053C86E /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A249279452740053C86E /* UIColor+Ext.swift */; };
 		6E43A24D27945E1C0053C86E /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A24C27945E1C0053C86E /* UILabel+Ext.swift */; };
 		6E43A24F27945F160053C86E /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A24E27945F160053C86E /* UIImageView+Ext.swift */; };
+		6E43A253279464780053C86E /* ButtonFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A252279464780053C86E /* ButtonFormView.swift */; };
+		6E43A2552794691E0053C86E /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2542794691E0053C86E /* UIStackView+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		6E43A249279452740053C86E /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		6E43A24C27945E1C0053C86E /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		6E43A24E27945F160053C86E /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
+		6E43A252279464780053C86E /* ButtonFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFormView.swift; sourceTree = "<group>"; };
+		6E43A2542794691E0053C86E /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,7 @@
 		6E43A22E2794480C0053C86E /* OnlyChat */ = {
 			isa = PBXGroup;
 			children = (
+				6E43A2512794645A0053C86E /* CustomElements */,
 				6E43A24427944FE70053C86E /* Extension */,
 				6E43A24327944F1F0053C86E /* Auth */,
 				6E43A22F2794480C0053C86E /* AppDelegate.swift */,
@@ -86,13 +91,30 @@
 		6E43A24427944FE70053C86E /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				6E43A250279462A10053C86E /* UIKit */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		6E43A250279462A10053C86E /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
 				6E43A24527944FFB0053C86E /* UIButton+Ext.swift */,
 				6E43A247279451C30053C86E /* UIFont+Ext.swift */,
 				6E43A249279452740053C86E /* UIColor+Ext.swift */,
 				6E43A24C27945E1C0053C86E /* UILabel+Ext.swift */,
 				6E43A24E27945F160053C86E /* UIImageView+Ext.swift */,
+				6E43A2542794691E0053C86E /* UIStackView+Ext.swift */,
 			);
-			path = Extension;
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		6E43A2512794645A0053C86E /* CustomElements */ = {
+			isa = PBXGroup;
+			children = (
+				6E43A252279464780053C86E /* ButtonFormView.swift */,
+			);
+			path = CustomElements;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,8 +188,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E43A24F27945F160053C86E /* UIImageView+Ext.swift in Sources */,
+				6E43A2552794691E0053C86E /* UIStackView+Ext.swift in Sources */,
 				6E43A2342794480C0053C86E /* AuthViewController.swift in Sources */,
 				6E43A2302794480C0053C86E /* AppDelegate.swift in Sources */,
+				6E43A253279464780053C86E /* ButtonFormView.swift in Sources */,
 				6E43A2322794480C0053C86E /* SceneDelegate.swift in Sources */,
 				6E43A24A279452740053C86E /* UIColor+Ext.swift in Sources */,
 				6E43A24627944FFB0053C86E /* UIButton+Ext.swift in Sources */,
