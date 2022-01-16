@@ -1,5 +1,5 @@
 //
-//  SignUpViewController.swift
+//  LoginViewController.swift
 //  OnlyChat
 //
 //  Created by Art on 16.01.2022.
@@ -7,27 +7,27 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+class LoginViewController: UIViewController {
     
 //MARK: - UI elements
-    private let logoLabel = UILabel(text: "Hello World", font: .avenir30())
+    private let logoLabel = UILabel(text: "Welcome back!", font: .avenir30())
+    private let loginWithLabel = UILabel(text: "Login with")
+    private let orLabel = UILabel(text: "or")
     private let emailLabel = UILabel(text: "Email")
     private let passwordLabel = UILabel(text: "Password")
-    private let confirmPassLabel = UILabel(text: "Confirm Password")
-    private let alreadyLabel = UILabel(text: "Already onboard?")
+    private let needAccountLabel = UILabel(text: "Need an account?")
     
     private let emailTextField = OneLineTextField(font: .avenir20())
     private let passwordTextField = OneLineTextField(font: .avenir20())
-    private let confirmPasTextField = OneLineTextField(font: .avenir20())
-    
     private var allStackView: UIStackView!
     private var bottomStackView: UIStackView!
     
-    private let signUpButton = UIButton(title: "Sign Up", titleColor: .mainWhite(), backgroundColor: .buttonDark())
-    private let loginButton: UIButton = {
+    private let googleButton = UIButton(title: "Google", titleColor: .black, backgroundColor: .mainWhite(), isShadow: true)
+    private let signInButton = UIButton(title: "Sign In", titleColor: .mainWhite(), backgroundColor: .buttonDark())
+    private let signUpButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Login", for: .normal)
+        button.setTitle("Sign Up", for: .normal)
         button.titleLabel?.font = UIFont.avenir20()
         button.setTitleColor(UIColor.buttonRed(), for: .normal)
         return button
@@ -36,27 +36,28 @@ class SignUpViewController: UIViewController {
 //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setStackView()
+        setViews()
         setConstraints()
     }
-}
-
-//MARK: - Set View and Constraints
-extension SignUpViewController {
-    private func setStackView() {
+    
+//MARK: - Set views
+    private func setViews() {
+        let loginWithView = ButtonFormView(label: loginWithLabel, button: googleButton)
         let emailStack = UIStackView(arrangedSubviews: [emailLabel, emailTextField], axis: .vertical, spacing: 0)
         let passwordStack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField], axis: .vertical, spacing: 0)
-        let confirmPasStack = UIStackView(arrangedSubviews: [confirmPassLabel, confirmPasTextField], axis: .vertical, spacing: 0)
-        loginButton.contentHorizontalAlignment = .leading
-        bottomStackView = UIStackView(arrangedSubviews: [alreadyLabel, loginButton], axis: .horizontal, spacing: 10)
+        allStackView = UIStackView(arrangedSubviews: [loginWithView, orLabel, emailStack, passwordStack, signInButton], axis: .vertical, spacing: 20)
+        signUpButton.contentHorizontalAlignment = .leading
+        bottomStackView = UIStackView(arrangedSubviews: [needAccountLabel, signUpButton], axis: .horizontal, spacing: 10)
         bottomStackView.alignment = .firstBaseline
-
-        allStackView = UIStackView(arrangedSubviews: [emailStack, passwordStack, confirmPasStack, signUpButton], axis: .vertical, spacing: 20)
+        
         view.addSubview(logoLabel)
         view.addSubview(allStackView)
         view.addSubview(bottomStackView)
     }
-    
+}
+
+//MARK: - Constraints
+extension LoginViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             logoLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
@@ -77,13 +78,13 @@ extension SignUpViewController {
 //MARK: - SwiftUI
 import SwiftUI
 
-struct SignUpViewControllerProvider: PreviewProvider {
+struct LoginViewControllerProvider: PreviewProvider {
     static var previews: some View {
         ContainerView().edgesIgnoringSafeArea(.all)
     }
     
     struct ContainerView: UIViewControllerRepresentable {
-        let viewController = SignUpViewController()
+        let viewController = LoginViewController()
         
         func makeUIViewController(context: Context) -> some UIViewController {
             viewController
