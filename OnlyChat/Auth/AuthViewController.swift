@@ -36,6 +36,7 @@ class AuthViewController: UIViewController {
         let loginView = ButtonFormView(label: loginLabel, button: loginButton)
         stackView = UIStackView(arrangedSubviews: [googleView, emailView, loginView], axis: .vertical, spacing: 40)
         view.addSubview(stackView)
+        googleButton.customGoogleButton()
     }
 }
 

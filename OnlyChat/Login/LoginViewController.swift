@@ -49,6 +49,7 @@ class LoginViewController: UIViewController {
         signUpButton.contentHorizontalAlignment = .leading
         bottomStackView = UIStackView(arrangedSubviews: [needAccountLabel, signUpButton], axis: .horizontal, spacing: 10)
         bottomStackView.alignment = .firstBaseline
+        googleButton.customGoogleButton()
         
         view.addSubview(logoLabel)
         view.addSubview(allStackView)
