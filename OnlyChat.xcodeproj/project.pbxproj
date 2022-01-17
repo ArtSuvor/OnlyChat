@@ -39,6 +39,8 @@
 		6E43A2602794A5970053C86E /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A25F2794A5960053C86E /* SetupViewController.swift */; };
 		6E43A2622794A7A50053C86E /* AddPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2612794A7A50053C86E /* AddPhotoView.swift */; };
 		6E43A2642794AD900053C86E /* UISegmentedControl+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2632794AD900053C86E /* UISegmentedControl+Ext.swift */; };
+		6EE5908D2795EF5300540898 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE5908C2795EF5300540898 /* ContactsCell.swift */; };
+		6EE5908F2795F09B00540898 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE5908E2795F09B00540898 /* UIViewController+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +78,8 @@
 		6E43A25F2794A5960053C86E /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		6E43A2612794A7A50053C86E /* AddPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoView.swift; sourceTree = "<group>"; };
 		6E43A2632794AD900053C86E /* UISegmentedControl+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Ext.swift"; sourceTree = "<group>"; };
+		6EE5908C2795EF5300540898 /* ContactsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
+		6EE5908E2795F09B00540898 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,7 @@
 		6E0C35782795534C005FF0EF /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
+				6EE5908B2795EF3B00540898 /* Cell */,
 				6E0C35972795AAFA005FF0EF /* Model */,
 				6E0C3579279553C6005FF0EF /* ContactsViewController.swift */,
 			);
@@ -250,6 +255,7 @@
 				6E43A24E27945F160053C86E /* UIImageView+Ext.swift */,
 				6E43A2542794691E0053C86E /* UIStackView+Ext.swift */,
 				6E43A2632794AD900053C86E /* UISegmentedControl+Ext.swift */,
+				6EE5908E2795F09B00540898 /* UIViewController+Ext.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -287,6 +293,14 @@
 				6E43A25F2794A5960053C86E /* SetupViewController.swift */,
 			);
 			path = SetupProfile;
+			sourceTree = "<group>";
+		};
+		6EE5908B2795EF3B00540898 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6EE5908C2795EF5300540898 /* ContactsCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,12 +396,14 @@
 				6E43A248279451C30053C86E /* UIFont+Ext.swift in Sources */,
 				6E43A25D27949EA50053C86E /* LoginViewController.swift in Sources */,
 				6E0C358627956F08005FF0EF /* ChatModel.swift in Sources */,
+				6EE5908D2795EF5300540898 /* ContactsCell.swift in Sources */,
 				6E0C358D27959F17005FF0EF /* WaitingChatCell.swift in Sources */,
 				6E0C35992795AB0A005FF0EF /* ModelUser.swift in Sources */,
 				6E0C358327956B53005FF0EF /* Bundle+Ext.swift in Sources */,
 				6E0C358927958A5B005FF0EF /* ActiveChatCell.swift in Sources */,
 				6E43A2642794AD900053C86E /* UISegmentedControl+Ext.swift in Sources */,
 				6E0C35902795A047005FF0EF /* ConfiguringCell.swift in Sources */,
+				6EE5908F2795F09B00540898 /* UIViewController+Ext.swift in Sources */,
 				6E43A24D27945E1C0053C86E /* UILabel+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

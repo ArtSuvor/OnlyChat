@@ -56,7 +56,7 @@ class ContactsViewController: UIViewController {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .mainWhite()
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(ContactsCell.self, forCellWithReuseIdentifier: ContactsCell.reuseId)
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
         
         view.addSubview(collectionView)
@@ -115,13 +115,12 @@ extension ContactsViewController {
 //MARK: - DataSource
 extension ContactsViewController {
     private func createDataSource() {
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            guard let section = Section(rawValue: indexPath.section) else { fatalError("Unknown section kind")}
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: {[weak self] collectionView, indexPath, itemIdentifier in
+            guard let section = Section(rawValue: indexPath.section),
+                  let self = self else { return UICollectionViewCell() }
             switch section {
             case .users:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-                cell.backgroundColor = .red
-                return cell
+                return self.config(collectionView: collectionView, cellType: ContactsCell.self, with: itemIdentifier, for: indexPath)
             }
         })
         

@@ -78,24 +78,16 @@ class ListViewController: UIViewController {
 }
 
 //MARK: - DataSource
-extension ListViewController {
-    private func config<T: ConfiguringCell>(cellType: T.Type, with value: ChatModel, for index: IndexPath) -> T {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseId, for: index) as? T else {
-            fatalError("Unknown section kind")
-        }
-        cell.configure(with: value)
-        return cell
-    }
-    
+extension ListViewController {    
     private func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: {[weak self] collectionView, indexPath, itemIdentifier in
             guard let section = Section(rawValue: indexPath.section),
                   let self = self else { return UICollectionViewCell() }
             switch section {
             case .waitingChats:
-                return self.config(cellType: WaitingChatCell.self, with: itemIdentifier, for: indexPath)
+                return self.config(collectionView: collectionView, cellType: WaitingChatCell.self, with: itemIdentifier, for: indexPath)
             case .activeChats:
-                return self.config(cellType: ActiveChatCell.self, with: itemIdentifier, for: indexPath)
+                return self.config(collectionView: collectionView, cellType: ActiveChatCell.self, with: itemIdentifier, for: indexPath)
             }
         })
         

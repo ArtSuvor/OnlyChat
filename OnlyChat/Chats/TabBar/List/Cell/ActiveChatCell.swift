@@ -15,6 +15,8 @@ class ActiveChatCell: UICollectionViewCell, ConfiguringCell {
     private let friendName = UILabel(text: "User name", font: .laoSangam20())
     private let lastMessage = UILabel(text: "sfhgafia", font: .laoSangam17())
     private let gradientView = GradientView(from: .topTrailing, to: .bottomLeading, startColor: #colorLiteral(red: 0.7882352941, green: 0.631372549, blue: 0.9411764706, alpha: 1), endColor: #colorLiteral(red: 0.4784313725, green: 0.6980392157, blue: 0.9215686275, alpha: 1))
+    private let containerView = UIView()
+    private let shadowImageView = UIView()
     
 //MARK: - Init
     override init(frame: CGRect) {
@@ -28,7 +30,8 @@ class ActiveChatCell: UICollectionViewCell, ConfiguringCell {
     }
     
 //MARK: - Configure
-    func configure(with value: ChatModel) {
+    func configure<U>(with value: U) where U: Hashable {
+        guard let value = value as? ChatModel else { return }
         friendImageView.image = UIImage(named: value.userImageString)
         friendName.text = value.userName
         lastMessage.text = value.lastMessage
@@ -37,21 +40,32 @@ class ActiveChatCell: UICollectionViewCell, ConfiguringCell {
 //MARK: - SetUI
     private func setUI() {
         friendImageView.translatesAutoresizingMaskIntoConstraints = false
-        friendImageView.backgroundColor = .gray
         friendImageView.layer.cornerRadius = 20
         friendImageView.layer.masksToBounds = true
-        
+
         gradientView.translatesAutoresizingMaskIntoConstraints = false
-        gradientView.backgroundColor = .black
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.layer.cornerRadius = 5
+        containerView.layer.masksToBounds = true
+        containerView.backgroundColor = .white
         
-        self.layer.cornerRadius = 5
-        self.layer.masksToBounds = true
-        self.backgroundColor = .white
+        shadowImageView.translatesAutoresizingMaskIntoConstraints = false
+        shadowImageView.layer.shadowColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1)
+        shadowImageView.layer.shadowRadius = 2
+        shadowImageView.layer.shadowOpacity = 1
+        shadowImageView.layer.shadowOffset = CGSize(width: 0, height: 4)
         
-        self.addSubview(friendImageView)
-        self.addSubview(friendName)
-        self.addSubview(lastMessage)
-        self.addSubview(gradientView)
+        self.layer.shadowColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1)
+        self.layer.shadowRadius = 3
+        self.layer.shadowOpacity = 0.7
+        self.layer.shadowOffset = CGSize(width: 0, height: 4)
+        
+        self.addSubview(containerView)
+        containerView.addSubview(shadowImageView)
+        shadowImageView.addSubview(friendImageView)
+        containerView.addSubview(friendName)
+        containerView.addSubview(lastMessage)
+        containerView.addSubview(gradientView)
     }
 }
 
@@ -59,24 +73,36 @@ class ActiveChatCell: UICollectionViewCell, ConfiguringCell {
 extension ActiveChatCell {
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            friendImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-            friendImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            friendImageView.widthAnchor.constraint(equalToConstant: 70),
-            friendImageView.heightAnchor.constraint(equalToConstant: 70)])
+            containerView.topAnchor.constraint(equalTo: self.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor)])
         
         NSLayoutConstraint.activate([
-            friendName.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            friendName.leadingAnchor.constraint(equalTo: friendImageView.trailingAnchor, constant: 10)])
+            shadowImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 5),
+            shadowImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            shadowImageView.widthAnchor.constraint(equalToConstant: 70),
+            shadowImageView.heightAnchor.constraint(equalToConstant: 70)])
+        
+        NSLayoutConstraint.activate([
+            friendImageView.topAnchor.constraint(equalTo: shadowImageView.topAnchor),
+            friendImageView.leadingAnchor.constraint(equalTo: shadowImageView.leadingAnchor),
+            friendImageView.trailingAnchor.constraint(equalTo: shadowImageView.trailingAnchor),
+            friendImageView.bottomAnchor.constraint(equalTo: shadowImageView.bottomAnchor)])
+        
+        NSLayoutConstraint.activate([
+            friendName.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5),
+            friendName.leadingAnchor.constraint(equalTo: shadowImageView.trailingAnchor, constant: 10)])
         
         NSLayoutConstraint.activate([
             lastMessage.topAnchor.constraint(equalTo: friendName.bottomAnchor, constant: 10),
-            lastMessage.leadingAnchor.constraint(equalTo: friendImageView.trailingAnchor, constant: 10),
-            lastMessage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)])
+            lastMessage.leadingAnchor.constraint(equalTo: shadowImageView.trailingAnchor, constant: 10),
+            lastMessage.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10)])
         
         NSLayoutConstraint.activate([
-            gradientView.topAnchor.constraint(equalTo: self.topAnchor),
-            gradientView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            gradientView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            gradientView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             gradientView.widthAnchor.constraint(equalToConstant: 10)])
     }
 }
