@@ -38,8 +38,8 @@ class ListViewController: UIViewController {
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .mainWhite()
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cel")
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        
+        collectionView.register(ActiveChatCell.self, forCellWithReuseIdentifier: ActiveChatCell.reuseId)
+
         view.addSubview(collectionView)
     }
     
@@ -69,19 +69,24 @@ class ListViewController: UIViewController {
 
 //MARK: - DataSource
 extension ListViewController {
+    private func config<T: ConfiguringCell>(cellType: T.Type, with value: ChatModel, for index: IndexPath) -> T {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseId, for: index) as? T else {
+            fatalError("Unknown section kind")
+        }
+        cell.configure(with: value)
+        return cell
+    }
+    
     private func createDataSource() {
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            guard let section = Section(rawValue: indexPath.section) else { return UICollectionViewCell() }
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: {[weak self] collectionView, indexPath, itemIdentifier in
+            guard let section = Section(rawValue: indexPath.section),
+                  let self = self else { return UICollectionViewCell() }
             switch section {
             case .waitingChats:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cel", for: indexPath)
-                cell.backgroundColor = .gray
                 return cell
-                
             case .activeChats:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-                cell.backgroundColor = .purple
-                return cell
+                return self.config(cellType: ActiveChatCell.self, with: itemIdentifier, for: indexPath)
             }
         })
     }
