@@ -7,11 +7,11 @@
 
 import UIKit
 
-struct ChatOnly: Hashable {
+struct ChatOnly: Hashable, Decodable {
     let userName: String
-    let userImage: UIImage
+    let userImage: String
     let lastMessage: String
-    let id = UUID()
+    let id: Int
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
