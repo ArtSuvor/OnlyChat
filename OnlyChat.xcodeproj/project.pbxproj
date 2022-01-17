@@ -18,6 +18,7 @@
 		6E0C358B279593C1005FF0EF /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0C358A279593C1005FF0EF /* GradientView.swift */; };
 		6E0C358D27959F17005FF0EF /* WaitingChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0C358C27959F17005FF0EF /* WaitingChatCell.swift */; };
 		6E0C35902795A047005FF0EF /* ConfiguringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0C358F2795A047005FF0EF /* ConfiguringCell.swift */; };
+		6E0C35922795A284005FF0EF /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0C35912795A284005FF0EF /* SectionHeader.swift */; };
 		6E43A2302794480C0053C86E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A22F2794480C0053C86E /* AppDelegate.swift */; };
 		6E43A2322794480C0053C86E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2312794480C0053C86E /* SceneDelegate.swift */; };
 		6E43A2342794480C0053C86E /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2332794480C0053C86E /* AuthViewController.swift */; };
@@ -50,6 +51,7 @@
 		6E0C358A279593C1005FF0EF /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		6E0C358C27959F17005FF0EF /* WaitingChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingChatCell.swift; sourceTree = "<group>"; };
 		6E0C358F2795A047005FF0EF /* ConfiguringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguringCell.swift; sourceTree = "<group>"; };
+		6E0C35912795A284005FF0EF /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		6E43A22C2794480C0053C86E /* OnlyChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlyChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E43A22F2794480C0053C86E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E43A2312794480C0053C86E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			children = (
 				6E0C358827958A5B005FF0EF /* ActiveChatCell.swift */,
 				6E0C358C27959F17005FF0EF /* WaitingChatCell.swift */,
+				6E0C35912795A284005FF0EF /* SectionHeader.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				6E43A2302794480C0053C86E /* AppDelegate.swift in Sources */,
 				6E43A2602794A5970053C86E /* SetupViewController.swift in Sources */,
 				6E43A2622794A7A50053C86E /* AddPhotoView.swift in Sources */,
+				6E0C35922795A284005FF0EF /* SectionHeader.swift in Sources */,
 				6E43A253279464780053C86E /* ButtonFormView.swift in Sources */,
 				6E43A2322794480C0053C86E /* SceneDelegate.swift in Sources */,
 				6E43A24A279452740053C86E /* UIColor+Ext.swift in Sources */,

@@ -13,6 +13,15 @@ class ListViewController: UIViewController {
     enum Section: Int, CaseIterable {
         case waitingChats
         case activeChats
+        
+        func description() -> String {
+            switch self {
+            case .waitingChats:
+                return "Waiting chats"
+            case .activeChats:
+                return "Active chats"
+            }
+        }
     }
     
 //MARK: - Properties
@@ -39,6 +48,7 @@ class ListViewController: UIViewController {
         collectionView.backgroundColor = .mainWhite()
         collectionView.register(WaitingChatCell.self, forCellWithReuseIdentifier: WaitingChatCell.reuseId)
         collectionView.register(ActiveChatCell.self, forCellWithReuseIdentifier: ActiveChatCell.reuseId)
+        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
 
         view.addSubview(collectionView)
     }
@@ -88,6 +98,19 @@ extension ListViewController {
                 return self.config(cellType: ActiveChatCell.self, with: itemIdentifier, for: indexPath)
             }
         })
+        
+        dataSource?.supplementaryViewProvider = { collection, kind, index in
+            guard let sectionHeader = collection.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.reuseId, for: index) as? SectionHeader else {
+                fatalError("Can not create new section header")
+            }
+            guard let section = Section(rawValue: index.section) else {
+                fatalError("Unknown section kind")
+            }
+            sectionHeader.configTitle(text: section.description(),
+                                      font: .laoSangam20(),
+                                      textColor: #colorLiteral(red: 92/255, green: 92/255, blue: 92/255, alpha: 1))
+            return sectionHeader
+        }
     }
 }
 
@@ -106,6 +129,10 @@ extension ListViewController {
                 return self.createActiveChatSection()
             }
         }
+        
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = 10
+        layout.configuration = config
         return layout
     }
     
@@ -119,6 +146,9 @@ extension ListViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+        
+        
+        section.boundarySupplementaryItems = [createSectionHeader()]
         return section
     }
     
@@ -126,13 +156,24 @@ extension ListViewController {
     private func createWaitingChatSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                                              heightDimension: .fractionalHeight(1)))
-        item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 0)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(88),
                                                                                           heightDimension: .absolute(88)),
                                                        subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
+        section.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 0)
+        section.boundarySupplementaryItems = [createSectionHeader()]
         return section
+    }
+    
+//MARK: - SectionHeader
+    private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                                                                           heightDimension: .estimated(1)),
+                                                                        elementKind: UICollectionView.elementKindSectionHeader,
+                                                                        alignment: .top)
+        return sectionHeader
     }
 }
 
