@@ -66,24 +66,3 @@ extension SetupViewController {
             allStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)])
     }
 }
-
-//MARK: - SwitfUI
-import SwiftUI
-
-struct SetuoViewControllerProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let viewController = SetupViewController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            viewController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
-    }
-}

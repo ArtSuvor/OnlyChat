@@ -144,25 +144,3 @@ extension ContactsViewController: UISearchBarDelegate {
         print(searchText)
     }
 }
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct TabBarControllerProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let viewController = MainTabBarController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            viewController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
-    }
-}
-
