@@ -5,11 +5,6 @@
 //  Created by Art on 17.01.2022.
 //
 
-protocol ConfiguringCell {
-    static var reuseId: String { get }
-    func configure(with value: ChatModel)
-}
-
 import UIKit
 
 class ActiveChatCell: UICollectionViewCell, ConfiguringCell {

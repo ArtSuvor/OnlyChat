@@ -37,7 +37,7 @@ class ListViewController: UIViewController {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .mainWhite()
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cel")
+        collectionView.register(WaitingChatCell.self, forCellWithReuseIdentifier: WaitingChatCell.reuseId)
         collectionView.register(ActiveChatCell.self, forCellWithReuseIdentifier: ActiveChatCell.reuseId)
 
         view.addSubview(collectionView)
@@ -83,8 +83,7 @@ extension ListViewController {
                   let self = self else { return UICollectionViewCell() }
             switch section {
             case .waitingChats:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cel", for: indexPath)
-                return cell
+                return self.config(cellType: WaitingChatCell.self, with: itemIdentifier, for: indexPath)
             case .activeChats:
                 return self.config(cellType: ActiveChatCell.self, with: itemIdentifier, for: indexPath)
             }
