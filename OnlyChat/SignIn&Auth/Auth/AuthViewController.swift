@@ -9,6 +9,9 @@ import UIKit
 
 class AuthViewController: UIViewController {
     
+    private let signUpVC = SignUpViewController()
+    private let loginVC = LoginViewController()
+    
 //MARK: - UI elements
     private let logoImageView = UIImageView(image: UIImage(named: "chat"), contentMode: .scaleAspectFit)
     private var stackView: UIStackView!
@@ -39,6 +42,9 @@ class AuthViewController: UIViewController {
         stackView = UIStackView(arrangedSubviews: [googleView, emailView, loginView], axis: .vertical, spacing: 40)
         view.addSubview(stackView)
         googleButton.customGoogleButton()
+        
+        loginVC.delegate = self
+        signUpVC.delegate = self
     }
     
 //MARK: - Add Targets
@@ -49,13 +55,22 @@ class AuthViewController: UIViewController {
     
 //MARK: - Objc Methods
     @objc private func emailButtonTapped() {
-        let signUpVC = SignUpViewController()
         present(signUpVC, animated: true)
     }
     
     @objc private func loginButtonTapped() {
-        let loginVC = LoginViewController()
         present(loginVC, animated: true)
+    }
+}
+
+//MARK: - AuthNavigationDelegate
+extension AuthViewController: AuthNavigationDelegate {
+    func toLoginVC() {
+        present(loginVC, animated: true, completion: nil)
+    }
+    
+    func toSignUpVC() {
+        present(signUpVC, animated: true, completion: nil)
     }
 }
 

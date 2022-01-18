@@ -33,6 +33,8 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    weak var delegate: AuthNavigationDelegate?
+    
 //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +63,10 @@ class LoginViewController: UIViewController {
 //MARK: - Add Targets
     private func addtargets() {
         signInButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(keyboardHide))
+        view.addGestureRecognizer(tapGR)
     }
     
 //MARK: - Objc Methods
@@ -68,11 +74,23 @@ class LoginViewController: UIViewController {
         AuthService.shared.login(email: emailTextField.text, password: passwordTextField.text) {[weak self] result in
             switch result {
             case .success(let user):
-                self?.showAlert(with: "Welcome back", and: "Hi!")
+                self?.showAlert(with: "Welcome back", and: "Hi!") {
+                    self?.present(SetupViewController(), animated: true, completion: nil)
+                }
             case .failure(let error):
                 self?.showAlert(with: "Error", and: error.localizedDescription)
             }
         }
+    }
+    
+    @objc private func signUpButtonTapped() {
+        dismiss(animated: true) {
+            self.delegate?.toSignUpVC()
+        }
+    }
+    
+    @objc private func keyboardHide() {
+        view.endEditing(true)
     }
 }
 

@@ -52,6 +52,7 @@
 		6EE590A62797062A00540898 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE590A52797062A00540898 /* Validators.swift */; };
 		6EE590A8279708ED00540898 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE590A7279708ED00540898 /* String+Ext.swift */; };
 		6EE590AA2797099300540898 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE590A92797099300540898 /* AuthError.swift */; };
+		6EE590AC2797168500540898 /* AuthNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE590AB2797168500540898 /* AuthNavigationDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		6EE590A52797062A00540898 /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
 		6EE590A7279708ED00540898 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		6EE590A92797099300540898 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
+		6EE590AB2797168500540898 /* AuthNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNavigationDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				6E0C358F2795A047005FF0EF /* ConfiguringCell.swift */,
+				6EE590AB2797168500540898 /* AuthNavigationDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				6E43A2552794691E0053C86E /* UIStackView+Ext.swift in Sources */,
 				6E43A2342794480C0053C86E /* AuthViewController.swift in Sources */,
 				6E43A2302794480C0053C86E /* AppDelegate.swift in Sources */,
+				6EE590AC2797168500540898 /* AuthNavigationDelegate.swift in Sources */,
 				6EE590942796DC6600540898 /* InsertableTextField.swift in Sources */,
 				6E43A2602794A5970053C86E /* SetupViewController.swift in Sources */,
 				6E43A2622794A7A50053C86E /* AddPhotoView.swift in Sources */,
