@@ -38,6 +38,22 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         setStackView()
         setConstraints()
+        addTargets()
+    }
+    
+//MARK: - Add Targets
+    private func addTargets() {
+        signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+    }
+    
+//MARK: - Objc Methods
+    @objc private func signUpButtonTapped() {
+        
+    }
+    
+    @objc private func loginButtonTapped() {
+        
     }
 }
 

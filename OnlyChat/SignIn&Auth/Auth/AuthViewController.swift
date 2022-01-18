@@ -26,6 +26,7 @@ class AuthViewController: UIViewController {
         super.viewDidLoad()
         setViews()
         setConstraints()
+        addTargets()
     }
     
 //MARK: - SetViews
@@ -38,6 +39,21 @@ class AuthViewController: UIViewController {
         stackView = UIStackView(arrangedSubviews: [googleView, emailView, loginView], axis: .vertical, spacing: 40)
         view.addSubview(stackView)
         googleButton.customGoogleButton()
+    }
+    
+//MARK: - Add Targets
+    private func addTargets() {
+        emailButton.addTarget(self, action: #selector(emailButtonTapped), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+    }
+    
+//MARK: - Objc Methods
+    @objc private func emailButtonTapped() {
+        
+    }
+    
+    @objc private func loginButtonTapped() {
+        
     }
 }
 
