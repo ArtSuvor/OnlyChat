@@ -38,6 +38,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         setViews()
         setConstraints()
+        addtargets()
     }
     
 //MARK: - Set views
@@ -55,6 +56,23 @@ class LoginViewController: UIViewController {
         view.addSubview(logoLabel)
         view.addSubview(allStackView)
         view.addSubview(bottomStackView)
+    }
+    
+//MARK: - Add Targets
+    private func addtargets() {
+        signInButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
+    }
+    
+//MARK: - Objc Methods
+    @objc private func signInButtonTapped() {
+        AuthService.shared.login(email: emailTextField.text, password: passwordTextField.text) {[weak self] result in
+            switch result {
+            case .success(let user):
+                self?.showAlert(with: "Welcome back", and: "Hi!")
+            case .failure(let error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
     }
 }
 

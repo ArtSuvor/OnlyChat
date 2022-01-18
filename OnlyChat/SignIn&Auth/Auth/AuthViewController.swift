@@ -49,11 +49,13 @@ class AuthViewController: UIViewController {
     
 //MARK: - Objc Methods
     @objc private func emailButtonTapped() {
-        
+        let signUpVC = SignUpViewController()
+        present(signUpVC, animated: true)
     }
     
     @objc private func loginButtonTapped() {
-        
+        let loginVC = LoginViewController()
+        present(loginVC, animated: true)
     }
 }
 

@@ -15,4 +15,11 @@ extension UIViewController {
         cell.configure(with: value)
         return cell
     }
+    
+    func showAlert(with title: String, and message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
 }

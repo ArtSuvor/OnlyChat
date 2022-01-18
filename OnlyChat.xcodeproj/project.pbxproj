@@ -48,6 +48,10 @@
 		6EE5909B2796FAD200540898 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EE5909A2796FAD200540898 /* GoogleService-Info.plist */; };
 		6EE5909E2796FBFD00540898 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE5909D2796FBFD00540898 /* FirebaseAnalytics */; };
 		6EE590A02796FBFD00540898 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE5909F2796FBFD00540898 /* FirebaseAuth */; };
+		6EE590A32796FF1C00540898 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE590A22796FF1C00540898 /* AuthService.swift */; };
+		6EE590A62797062A00540898 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE590A52797062A00540898 /* Validators.swift */; };
+		6EE590A8279708ED00540898 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE590A7279708ED00540898 /* String+Ext.swift */; };
+		6EE590AA2797099300540898 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE590A92797099300540898 /* AuthError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +96,10 @@
 		6EE590952796E1A900540898 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		6EE590982796E73700540898 /* ChatRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequestViewController.swift; sourceTree = "<group>"; };
 		6EE5909A2796FAD200540898 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6EE590A22796FF1C00540898 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		6EE590A52797062A00540898 /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
+		6EE590A7279708ED00540898 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		6EE590A92797099300540898 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +121,6 @@
 				6EE590972796E72000540898 /* ChatRequest */,
 				6E0C35952795AA60005FF0EF /* Header */,
 				6E0C358727958A46005FF0EF /* Cell */,
-				6E0C358427956EF6005FF0EF /* Models */,
 				6E0C35962795AA74005FF0EF /* ViewController */,
 			);
 			path = List;
@@ -153,7 +160,6 @@
 			children = (
 				6EE590902796D08700540898 /* ProfileView */,
 				6EE5908B2795EF3B00540898 /* Cell */,
-				6E0C35972795AAFA005FF0EF /* Model */,
 				6E0C3579279553C6005FF0EF /* ContactsViewController.swift */,
 			);
 			path = Contacts;
@@ -162,6 +168,7 @@
 		6E0C358427956EF6005FF0EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6E0C35982795AB0A005FF0EF /* ModelUser.swift */,
 				6E0C358527956F08005FF0EF /* ChatModel.swift */,
 			);
 			path = Models;
@@ -200,14 +207,6 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		6E0C35972795AAFA005FF0EF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				6E0C35982795AB0A005FF0EF /* ModelUser.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		6E43A2232794480C0053C86E = {
 			isa = PBXGroup;
 			children = (
@@ -227,6 +226,8 @@
 		6E43A22E2794480C0053C86E /* OnlyChat */ = {
 			isa = PBXGroup;
 			children = (
+				6EE590A42797061D00540898 /* Helpers */,
+				6EE590A12796FEC600540898 /* Services */,
 				6E0C358E2795A035005FF0EF /* Protocols */,
 				6E43A2512794645A0053C86E /* CustomElements */,
 				6E43A24427944FE70053C86E /* Extension */,
@@ -258,6 +259,7 @@
 			children = (
 				6E43A250279462A10053C86E /* UIKit */,
 				6E0C358227956B53005FF0EF /* Bundle+Ext.swift */,
+				6EE590A7279708ED00540898 /* String+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -336,6 +338,24 @@
 				6EE590982796E73700540898 /* ChatRequestViewController.swift */,
 			);
 			path = ChatRequest;
+			sourceTree = "<group>";
+		};
+		6EE590A12796FEC600540898 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6E0C358427956EF6005FF0EF /* Models */,
+				6EE590A22796FF1C00540898 /* AuthService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6EE590A42797061D00540898 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6EE590A52797062A00540898 /* Validators.swift */,
+				6EE590A92797099300540898 /* AuthError.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,6 +447,7 @@
 				6E0C357A279553C6005FF0EF /* ContactsViewController.swift in Sources */,
 				6E0C3577279552F4005FF0EF /* MainTabBarController.swift in Sources */,
 				6E43A24F27945F160053C86E /* UIImageView+Ext.swift in Sources */,
+				6EE590A62797062A00540898 /* Validators.swift in Sources */,
 				6E43A2552794691E0053C86E /* UIStackView+Ext.swift in Sources */,
 				6E43A2342794480C0053C86E /* AuthViewController.swift in Sources */,
 				6E43A2302794480C0053C86E /* AppDelegate.swift in Sources */,
@@ -436,6 +457,7 @@
 				6EE590922796D0A400540898 /* ProfileViewController.swift in Sources */,
 				6EE590992796E73700540898 /* ChatRequestViewController.swift in Sources */,
 				6E0C35922795A284005FF0EF /* SectionHeader.swift in Sources */,
+				6EE590A8279708ED00540898 /* String+Ext.swift in Sources */,
 				6E43A253279464780053C86E /* ButtonFormView.swift in Sources */,
 				6E43A2322794480C0053C86E /* SceneDelegate.swift in Sources */,
 				6E43A24A279452740053C86E /* UIColor+Ext.swift in Sources */,
@@ -446,10 +468,12 @@
 				6EE5908D2795EF5300540898 /* ContactsCell.swift in Sources */,
 				6E0C358D27959F17005FF0EF /* WaitingChatCell.swift in Sources */,
 				6E0C35992795AB0A005FF0EF /* ModelUser.swift in Sources */,
+				6EE590AA2797099300540898 /* AuthError.swift in Sources */,
 				6E0C358327956B53005FF0EF /* Bundle+Ext.swift in Sources */,
 				6E0C358927958A5B005FF0EF /* ActiveChatCell.swift in Sources */,
 				6E43A2642794AD900053C86E /* UISegmentedControl+Ext.swift in Sources */,
 				6E0C35902795A047005FF0EF /* ConfiguringCell.swift in Sources */,
+				6EE590A32796FF1C00540898 /* AuthService.swift in Sources */,
 				6EE5908F2795F09B00540898 /* UIViewController+Ext.swift in Sources */,
 				6E43A24D27945E1C0053C86E /* UILabel+Ext.swift in Sources */,
 			);
