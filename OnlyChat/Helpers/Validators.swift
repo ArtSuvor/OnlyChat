@@ -19,4 +19,14 @@ class Validators {
               }
         return true
     }
+    
+    static func notEmpry(userName: String?, description: String?, sex: String?) -> Bool {
+        guard let user = userName,
+              let des = description,
+              let sex = sex,
+              user != "",
+              des != "",
+              sex != "" else { return false }
+        return true
+    }
 }

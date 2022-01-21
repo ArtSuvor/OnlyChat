@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SetupViewController: UIViewController {
     
@@ -23,12 +24,24 @@ class SetupViewController: UIViewController {
     private let sexSegmentedControl = UISegmentedControl(first: "Male", second: "Female")
     private let goChatButton = UIButton(title: "Go to chat`s", titleColor: .mainWhite(), backgroundColor: .buttonDark())
     
+    private let currentUser: User
+    
 //MARK: - Life cycle
+    init(user: User) {
+        self.currentUser = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setLogoAndImage()
         setStackView()
         setConstraints()
+        addTarget()
     }
     
 //MARK: - Methods
@@ -46,6 +59,35 @@ class SetupViewController: UIViewController {
         allStackView = UIStackView(arrangedSubviews: [fullNameStack, aboutStackView, sexStackView, goChatButton], axis: .vertical, spacing: 30)
         
         view.addSubview(allStackView)
+    }
+    
+    private func addTarget() {
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        view.addGestureRecognizer(tapGR)
+        
+        goChatButton.addTarget(self, action: #selector(chatButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func chatButtonTapped() {
+        guard let email = currentUser.email else { return }
+        let segmentIndex = sexSegmentedControl.selectedSegmentIndex
+        FirebaseService.shared.saveProfileWith(id: currentUser.uid,
+                                               email: email,
+                                               userName: fullNameTextField.text,
+                                               avatarStringURL: "",
+                                               description: aboutTextField.text,
+                                               sex: sexSegmentedControl.titleForSegment(at: segmentIndex)) {[weak self] result in
+            switch result {
+            case .success(let user):
+                self?.showAlert(with: "Success", and: "")
+            case .failure(let error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
+    }
+    
+    @objc private func viewTapped() {
+        view.endEditing(true)
     }
 }
 

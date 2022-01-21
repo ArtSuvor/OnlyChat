@@ -75,7 +75,7 @@ class LoginViewController: UIViewController {
             switch result {
             case .success(let user):
                 self?.showAlert(with: "Welcome back", and: "Hi!") {
-                    self?.present(SetupViewController(), animated: true, completion: nil)
+                    self?.present(SetupViewController(user: user), animated: true, completion: nil)
                 }
             case .failure(let error):
                 self?.showAlert(with: "Error", and: error.localizedDescription)

@@ -8,9 +8,22 @@
 import Foundation
 
 struct ModelUser: Hashable, Decodable {
+    let id: String
     let userName: String
     let avatarStringURL: String
-    let id: Int
+    let email: String
+    let description: String
+    let sex: String
+    
+    var representation: [String: Any] {
+        var rep = ["uid": id]
+        rep["userName"] = userName
+        rep["email"] = email
+        rep["avatarStringUrl"] = avatarStringURL
+        rep["description"] = description
+        rep["sex"] = sex
+        return rep
+    }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
