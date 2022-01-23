@@ -27,12 +27,27 @@ class ListViewController: UIViewController {
 //MARK: - Properties
     private let activeChats = Bundle.main.decode([ChatModel].self, from: "activeChats.json")
     private let waitingChats = Bundle.main.decode([ChatModel].self, from: "waitingChats.json")
+    private let currentUser: ModelUser
     
 //MARK: - UI elements
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, ChatModel>?
     
 //MARK: - Life cycle
+    init(user: ModelUser) {
+        self.currentUser = user
+        super.init(nibName: nil, bundle: nil)
+        title = currentUser.userName
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        navigationItem.standardAppearance = appearance
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()

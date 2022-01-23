@@ -64,6 +64,7 @@ class LoginViewController: UIViewController {
     private func addtargets() {
         signInButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        googleButton.addTarget(self, action: #selector(tappedGoogle), for: .touchUpInside)
         
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(keyboardHide))
         view.addGestureRecognizer(tapGR)
@@ -77,8 +78,8 @@ class LoginViewController: UIViewController {
                 self?.showAlert(with: "Success!", and: "Welcome back!") {
                     FirebaseService.shared.getUserData(user: user) { result in
                         switch result {
-                        case .success(_):
-                            self?.present(MainTabBarController(), animated: true)
+                        case .success(let user):
+                            self?.present(MainTabBarController(user: user), animated: true)
                         case .failure(_):
                             self?.present(SetupViewController(user: user), animated: true)
                         }
@@ -98,6 +99,28 @@ class LoginViewController: UIViewController {
     
     @objc private func keyboardHide() {
         view.endEditing(true)
+    }
+    
+    @objc private func tappedGoogle() {
+        AuthService.shared.loginWithGoogle(presenting: self) {[weak self] result in
+            switch result {
+            case .success(let user):
+                FirebaseService.shared.getUserData(user: user) { result in
+                    switch result {
+                    case .success(let user):
+                        self?.showAlert(with: "Success", and: "You are logged in") {
+                            self?.present(MainTabBarController(user: user), animated: true)
+                        }
+                    case .failure(_):
+                        self?.showAlert(with: "Success!", and: "You are registered") {
+                            self?.present(SetupViewController(user: user), animated: true)
+                        }
+                    }
+                }
+            case .failure(let error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
     }
 }
 

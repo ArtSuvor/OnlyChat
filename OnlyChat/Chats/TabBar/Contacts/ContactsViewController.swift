@@ -23,13 +23,28 @@ class ContactsViewController: UIViewController {
     }
     
 //MARK: - Properties
-    private let users = Bundle.main.decode([ModelUser].self, from: "users.json")
+    private let users = [ModelUser(id: "asds", name: "sdf", email: "sdfas", description: "sdf", sex: "sdf", avatarStringUrl: "sdf")]
+    private let currentUser: ModelUser
     
 //MARK: - UI
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, ModelUser>!
     
 //MARK: - Life cycle
+    init(user: ModelUser) {
+        self.currentUser = user
+        super.init(nibName: nil, bundle: nil)
+        title = currentUser.userName
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        navigationItem.standardAppearance = appearance
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -51,7 +66,9 @@ class ContactsViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "LogOut", style: .plain, target: self, action: #selector(logOut))
+        let barButton = UIBarButtonItem(title: "LogOut", style: .plain, target: self, action: #selector(logOut))
+        barButton.tintColor = .red
+        navigationItem.rightBarButtonItem = barButton
     }
     
 //MARK: - LogOut
@@ -66,6 +83,7 @@ class ContactsViewController: UIViewController {
                 print("Error log out \(error.localizedDescription)")
             }
         }))
+        present(alert, animated: true)
     }
     
 //MARK: - Set Collection

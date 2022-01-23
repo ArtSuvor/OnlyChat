@@ -20,8 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let user = Auth.auth().currentUser {
             FirebaseService.shared.getUserData(user: user) { [weak self] result in
                 switch result {
-                case .success(_):
-                    self?.window?.rootViewController = MainTabBarController()
+                case .success(let user):
+                    self?.window?.rootViewController = MainTabBarController(user: user)
                 case .failure(let error):
                     print(error)
                     self?.window?.rootViewController = AuthViewController()

@@ -8,12 +8,23 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
+    private let currentUser: ModelUser
+    
+    init(user: ModelUser = ModelUser(id: "", name: "", email: "", description: "", sex: "", avatarStringUrl: "")) {
+        self.currentUser = user
+        super.init(nibName: nil, bundle: nil)
+        self.modalPresentationStyle = .fullScreen
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let contactsVC = ContactsViewController()
-        let listVC = ListViewController()
+        let contactsVC = ContactsViewController(user: currentUser)
+        let listVC = ListViewController(user: currentUser)
         viewControllers = setViewControllers(first: contactsVC, second: listVC)
         tabBar.tintColor = #colorLiteral(red: 0.5568627451, green: 0.3529411765, blue: 0.968627451, alpha: 1)
     }

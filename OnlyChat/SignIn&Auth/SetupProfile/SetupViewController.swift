@@ -30,6 +30,10 @@ class SetupViewController: UIViewController {
     init(user: User) {
         self.currentUser = user
         super.init(nibName: nil, bundle: nil)
+        
+        if let userName = currentUser.displayName {
+            fullNameTextField.text = userName
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -78,9 +82,9 @@ class SetupViewController: UIViewController {
                                                description: aboutTextField.text,
                                                sex: sexSegmentedControl.titleForSegment(at: segmentIndex)) {[weak self] result in
             switch result {
-            case .success(_):
+            case .success(let user):
                 self?.showAlert(with: "Success", and: "") {
-                    self?.present(MainTabBarController(), animated: true)
+                    self?.present(MainTabBarController(user: user), animated: true)
                 }
             case .failure(let error):
                 self?.showAlert(with: "Error", and: error.localizedDescription)
