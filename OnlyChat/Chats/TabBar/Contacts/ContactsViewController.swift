@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ContactsViewController: UIViewController {
     
@@ -31,14 +32,14 @@ class ContactsViewController: UIViewController {
 //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSearchBar()
+        setupNavigationBar()
         setCollectionView()
         createDataSource()
         reloadData(with: nil)
     }
     
 //MARK: - Methods
-    private func setupSearchBar() {
+    private func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = .mainWhite()
         navigationController?.navigationBar.shadowImage = UIImage()
         
@@ -49,6 +50,22 @@ class ContactsViewController: UIViewController {
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "LogOut", style: .plain, target: self, action: #selector(logOut))
+    }
+    
+//MARK: - LogOut
+    @objc private func logOut() {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to sign out?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { _ in
+            do {
+                try Auth.auth().signOut()
+                UIApplication.shared.keyWindow?.rootViewController = AuthViewController()
+            } catch {
+                print("Error log out \(error.localizedDescription)")
+            }
+        }))
     }
     
 //MARK: - Set Collection

@@ -74,8 +74,15 @@ class LoginViewController: UIViewController {
         AuthService.shared.login(email: emailTextField.text, password: passwordTextField.text) {[weak self] result in
             switch result {
             case .success(let user):
-                self?.showAlert(with: "Welcome back", and: "Hi!") {
-                    self?.present(SetupViewController(user: user), animated: true, completion: nil)
+                self?.showAlert(with: "Success!", and: "Welcome back!") {
+                    FirebaseService.shared.getUserData(user: user) { result in
+                        switch result {
+                        case .success(_):
+                            self?.present(MainTabBarController(), animated: true)
+                        case .failure(_):
+                            self?.present(SetupViewController(user: user), animated: true)
+                        }
+                    }
                 }
             case .failure(let error):
                 self?.showAlert(with: "Error", and: error.localizedDescription)

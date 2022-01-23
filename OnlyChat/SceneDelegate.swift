@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,7 +17,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window.windowScene = windowScene
-        window.rootViewController = AuthViewController()
+        if let user = Auth.auth().currentUser {
+            FirebaseService.shared.getUserData(user: user) { [weak self] result in
+                switch result {
+                case .success(_):
+                    self?.window?.rootViewController = MainTabBarController()
+                case .failure(let error):
+                    print(error)
+                    self?.window?.rootViewController = AuthViewController()
+                }
+            }
+        } else {
+            window.rootViewController = AuthViewController()
+        }
         window.makeKeyAndVisible()
         self.window = window
     }

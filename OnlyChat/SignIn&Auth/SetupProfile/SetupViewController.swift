@@ -74,12 +74,14 @@ class SetupViewController: UIViewController {
         FirebaseService.shared.saveProfileWith(id: currentUser.uid,
                                                email: email,
                                                userName: fullNameTextField.text,
-                                               avatarStringURL: "",
+                                               avatarStringURL: "adf",
                                                description: aboutTextField.text,
                                                sex: sexSegmentedControl.titleForSegment(at: segmentIndex)) {[weak self] result in
             switch result {
-            case .success(let user):
-                self?.showAlert(with: "Success", and: "")
+            case .success(_):
+                self?.showAlert(with: "Success", and: "") {
+                    self?.present(MainTabBarController(), animated: true)
+                }
             case .failure(let error):
                 self?.showAlert(with: "Error", and: error.localizedDescription)
             }
