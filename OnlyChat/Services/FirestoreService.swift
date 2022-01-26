@@ -8,9 +8,11 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import UIKit
 
 class FirebaseService {
     static let shared = FirebaseService()
+    private init() {}
     private let db = Firestore.firestore()
     private var usersRef: CollectionReference {
         db.collection("users")
@@ -31,14 +33,28 @@ class FirebaseService {
         }
     }
     
-    func saveProfileWith(id: String, email: String, userName: String?, avatarStringURL: String?, description: String?, sex: String?, completion: @escaping (Result<ModelUser, Error>) -> Void) {
+    func saveProfileWith(id: String, email: String, userName: String?, avatarImage: UIImage?, description: String?, sex: String?, completion: @escaping (Result<ModelUser, Error>) -> Void) {
         guard Validators.notEmpry(userName: userName, description: description, sex: sex) else {
             completion(.failure(UserError.notField))
             return
         }
+        guard avatarImage != UIImage(named: "avatar") else {
+            completion(.failure(UserError.photoNotExist))
+            return
+        }
         
-        let model = ModelUser(id: id, name: userName!, email: email, description: description!, sex: sex!, avatarStringUrl: "")
-        self.usersRef.document(model.id).setData(model.representation) { error in
+        var model = ModelUser(id: id, name: userName!, email: email, description: description!, sex: sex!, avatarStringUrl: "")
+        
+        StorageService.shared.uploadPhoto(photo: avatarImage!) { result in
+            switch result {
+            case .success(let url):
+                model.avatarStringURL = url.absoluteString
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
+        usersRef.document(model.id).setData(model.representation) { error in
             if let error = error {
                 completion(.failure(error))
             } else {

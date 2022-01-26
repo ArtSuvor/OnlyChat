@@ -10,11 +10,11 @@ import UIKit
 class AddPhotoView: UIView {
     
 //MARK: - UI elements
-    var circleImageView: UIImageView = {
+    let circleImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "avatar")
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.layer.borderColor = UIColor.black.cgColor
         view.layer.borderWidth = 1
@@ -28,6 +28,8 @@ class AddPhotoView: UIView {
         button.tintColor = .buttonDark()
         return button
     }()
+    
+    weak var delegate: AddingPhotoUser?
     
 //MARK: - Init
     override init(frame: CGRect) {
@@ -48,6 +50,7 @@ class AddPhotoView: UIView {
     private func setViews() {
         addSubview(circleImageView)
         addSubview(addedButton)
+        addedButton.addTarget(self, action: #selector(tappedAddButton), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             circleImageView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -67,5 +70,9 @@ class AddPhotoView: UIView {
     private func setImageView() {
         circleImageView.layer.masksToBounds = true
         circleImageView.layer.cornerRadius = circleImageView.frame.width / 2
+    }
+    
+    @objc private func tappedAddButton() {
+        delegate?.tappedAddButton()
     }
 }

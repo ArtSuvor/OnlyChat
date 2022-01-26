@@ -51,6 +51,7 @@ class SetupViewController: UIViewController {
 //MARK: - Methods
     private func setLogoAndImage() {
         fullImageView.translatesAutoresizingMaskIntoConstraints = false
+        fullImageView.delegate = self
         view.backgroundColor = .mainWhite()
         view.addSubview(logoLabel)
         view.addSubview(fullImageView)
@@ -78,7 +79,7 @@ class SetupViewController: UIViewController {
         FirebaseService.shared.saveProfileWith(id: currentUser.uid,
                                                email: email,
                                                userName: fullNameTextField.text,
-                                               avatarStringURL: "adf",
+                                               avatarImage: fullImageView.circleImageView.image,
                                                description: aboutTextField.text,
                                                sex: sexSegmentedControl.titleForSegment(at: segmentIndex)) {[weak self] result in
             switch result {
@@ -94,6 +95,25 @@ class SetupViewController: UIViewController {
     
     @objc private func viewTapped() {
         view.endEditing(true)
+    }
+}
+
+//MARK: - AddingPhotoUser
+extension SetupViewController: AddingPhotoUser {
+    func tappedAddButton() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
+    }
+}
+
+//MARK: - UIImagePickerCOntrollerDelegate
+extension SetupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        fullImageView.circleImageView.image = image
     }
 }
 

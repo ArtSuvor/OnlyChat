@@ -13,7 +13,7 @@ struct ModelUser: Hashable, Decodable {
 //MARK: - Properties
     let id: String
     let userName: String
-    let avatarStringURL: String
+    var avatarStringURL: String
     let email: String
     let description: String
     let sex: String
