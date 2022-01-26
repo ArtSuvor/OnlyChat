@@ -7,6 +7,7 @@
 
 import Foundation
 
+//маски для проверки текста в textField
 extension String {
     enum ValidTypes {
         case name
