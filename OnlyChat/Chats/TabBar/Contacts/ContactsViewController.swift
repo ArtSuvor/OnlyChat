@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class ContactsViewController: UIViewController {
     
@@ -23,8 +24,9 @@ class ContactsViewController: UIViewController {
     }
     
 //MARK: - Properties
-    private let users = [ModelUser(id: "asds", name: "sdf", email: "sdfas", description: "sdf", sex: "sdf", avatarStringUrl: "sdf")]
+    private var users = [ModelUser]()
     private let currentUser: ModelUser
+    private var usersListener: ListenerRegistration?
     
 //MARK: - UI
     private var collectionView: UICollectionView!
@@ -50,7 +52,11 @@ class ContactsViewController: UIViewController {
         setupNavigationBar()
         setCollectionView()
         createDataSource()
-        reloadData(with: nil)
+        setupListener()
+    }
+    
+    deinit {
+        usersListener?.remove()
     }
     
 //MARK: - Methods
@@ -69,6 +75,19 @@ class ContactsViewController: UIViewController {
         let barButton = UIBarButtonItem(title: "LogOut", style: .plain, target: self, action: #selector(logOut))
         barButton.tintColor = .red
         navigationItem.rightBarButtonItem = barButton
+    }
+    
+//MARK: - Listener
+    private func setupListener() {
+        usersListener = ListenerService.shared.usersObserve(users: users) {[weak self] result in
+            switch result {
+            case .success(let users):
+                self?.users = users
+                self?.reloadData(with: nil)
+            case .failure(let error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
     }
     
 //MARK: - LogOut

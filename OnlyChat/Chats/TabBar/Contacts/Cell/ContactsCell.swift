@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ContactsCell: UICollectionViewCell, ConfiguringCell {
     static var reuseId: String = "ContactsCell"
@@ -21,6 +22,11 @@ class ContactsCell: UICollectionViewCell, ConfiguringCell {
         setConstaints()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        userImageView.image = nil
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -28,8 +34,10 @@ class ContactsCell: UICollectionViewCell, ConfiguringCell {
 //MARK: - Config
     func configure<U>(with value: U) where U: Hashable {
         guard let value = value as? ModelUser else { return }
-        userImageView.image = UIImage(named: value.avatarStringURL)
         userNameLabel.text = value.userName
+        
+        let imageUrl = URL(string: value.avatarStringURL)
+        userImageView.sd_setImage(with: imageUrl, completed: nil)
     }
     
 //MARK: - SetUI

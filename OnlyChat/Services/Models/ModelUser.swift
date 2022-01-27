@@ -54,6 +54,22 @@ struct ModelUser: Hashable, Decodable {
         self.sex = sex
     }
     
+    init?(_ document: QueryDocumentSnapshot) {
+        let data = document.data()
+        guard let userName = data["userName"] as? String,
+              let id = data["uid"] as? String,
+              let imageUrl = data["avatarStringUrl"] as? String,
+              let email = data["email"] as? String,
+              let description = data["description"] as? String,
+              let sex = data["sex"] as? String else { return nil }
+        self.id = id
+        self.userName = userName
+        self.avatarStringURL = imageUrl
+        self.email = email
+        self.description = description
+        self.sex = sex
+    }
+    
 //MARK: - Methods
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
