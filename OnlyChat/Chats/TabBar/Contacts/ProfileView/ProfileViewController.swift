@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProfileViewController: UIViewController {
     
@@ -15,8 +16,23 @@ class ProfileViewController: UIViewController {
     private let nameLabel = UILabel(text: "dfgsdfgs", font: .avenir20())
     private let aboutLabel = UILabel(text: "zbnjbzjdfbkzfbz", font: .laoSangam17())
     private let myTextField = InsertableTextField()
+    private let user: ModelUser
     
 //MARK: - Life cycle
+    init(user: ModelUser) {
+        self.user = user
+        self.nameLabel.text = user.userName
+        self.aboutLabel.text = user.description
+        
+        let imageUrl = URL(string: user.avatarStringURL)
+        self.imageView.sd_setImage(with: imageUrl, completed: nil)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
@@ -25,6 +41,7 @@ class ProfileViewController: UIViewController {
     
 //MARK: - SetViews
     private func setView() {
+        setupGesture()
         containterView.translatesAutoresizingMaskIntoConstraints = false
         containterView.backgroundColor = .mainWhite()
         containterView.layer.cornerRadius = 30
@@ -44,7 +61,28 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func tappedSendMessage() {
-        print("Hi")
+        guard let message = myTextField.text, message != "" else { return }
+        
+        FirebaseService.shared.createWaitingChat(message: message, receiver: user) {[weak self] result in
+            switch result {
+            case .success:
+                self?.showAlert(with: "Success", and: "You spent message") {
+                    self?.dismiss(animated: true)
+                }
+            case .failure(let error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
+    }
+    
+//MARK: - Gesture
+    private func setupGesture() {
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(tappedView))
+        view.addGestureRecognizer(tapGR)
+    }
+    
+    @objc private func tappedView() {
+        view.endEditing(true)
     }
 }
 

@@ -25,8 +25,8 @@ class ListViewController: UIViewController {
     }
     
 //MARK: - Properties
-    private let activeChats = Bundle.main.decode([ChatModel].self, from: "activeChats.json")
-    private let waitingChats = Bundle.main.decode([ChatModel].self, from: "waitingChats.json")
+    private let activeChats = [ChatModel]()
+    private let waitingChats = [ChatModel]()
     private let currentUser: ModelUser
     
 //MARK: - UI elements

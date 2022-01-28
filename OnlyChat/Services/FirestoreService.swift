@@ -17,6 +17,7 @@ class FirebaseService {
     private var usersRef: CollectionReference {
         db.collection("users")
     }
+    private var currentUser: ModelUser!
     
     func getUserData(user: User, completion: @escaping (Result<ModelUser, Error>) -> Void) {
         let docRef = usersRef.document(user.uid)
@@ -26,6 +27,7 @@ class FirebaseService {
                     completion(.failure(UserError.cannotUnwrapToModel))
                     return
                 }
+                self.currentUser = muser
                 completion(.success(muser))
             } else {
                 completion(.failure(UserError.cannotGetUserInfo))
@@ -59,6 +61,30 @@ class FirebaseService {
                 completion(.failure(error))
             } else {
                 completion(.success(model))
+            }
+        }
+    }
+    
+    func createWaitingChat(message: String, receiver: ModelUser, completion: @escaping (Result<Void, Error>) -> Void) {
+        let reference = db.collection(["users", receiver.id, "waitingChats"].joined(separator: "/"))
+        let messageRef = reference.document(self.currentUser.id).collection("messages")
+        
+        let message = MessageModel(user: currentUser, content: message)
+        let chat = ChatModel(friendUserName: currentUser.userName,
+                             friendAvatarString: currentUser.avatarStringURL,
+                             lastMessage: message.content,
+                             friendId: currentUser.id)
+        reference.document(currentUser.id).setData(chat.representation) { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            messageRef.addDocument(data: message.representation) { error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                completion(.success(Void()))
             }
         }
     }

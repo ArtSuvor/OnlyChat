@@ -50,6 +50,7 @@ class InsertableTextField: UITextField {
     private func setViews() {
         backgroundColor = .white
         font = UIFont.systemFont(ofSize: 14)
+        textColor = .black
         layer.cornerRadius = 17
         layer.masksToBounds = true
         attributedPlaceholder = NSAttributedString(string: "Write something here...", attributes: [

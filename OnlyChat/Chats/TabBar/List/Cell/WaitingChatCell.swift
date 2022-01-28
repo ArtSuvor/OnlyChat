@@ -41,7 +41,7 @@ class WaitingChatCell: UICollectionViewCell, ConfiguringCell {
 //MARK: - Config
     func configure<U>(with value: U) where U: Hashable {
         guard let value = value as? ChatModel else { return }
-        friendImageView.image = UIImage(named: value.userImageString)
+//        friendImageView.image = UIImage(named: value.userImageString)
     }
 }
 

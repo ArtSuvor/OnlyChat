@@ -42,6 +42,7 @@
 		6E43A2642794AD900053C86E /* UISegmentedControl+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E43A2632794AD900053C86E /* UISegmentedControl+Ext.swift */; };
 		6E4DA80327A2FBE1004F9FA3 /* ListenerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4DA80227A2FBE1004F9FA3 /* ListenerService.swift */; };
 		6E4DA80627A301D4004F9FA3 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 6E4DA80527A301D4004F9FA3 /* SDWebImage */; };
+		6E4DA80827A3FD4B004F9FA3 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4DA80727A3FD4B004F9FA3 /* MessageModel.swift */; };
 		6E651444279B242500A183FB /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E651443279B242500A183FB /* FirestoreService.swift */; };
 		6E65144D279B278700A183FB /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65144C279B278700A183FB /* UserError.swift */; };
 		6E834FDB27A1332A002DA578 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6E834FDA27A1332A002DA578 /* FirebaseAnalytics */; };
@@ -101,6 +102,7 @@
 		6E43A2612794A7A50053C86E /* AddPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoView.swift; sourceTree = "<group>"; };
 		6E43A2632794AD900053C86E /* UISegmentedControl+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Ext.swift"; sourceTree = "<group>"; };
 		6E4DA80227A2FBE1004F9FA3 /* ListenerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenerService.swift; sourceTree = "<group>"; };
+		6E4DA80727A3FD4B004F9FA3 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		6E651443279B242500A183FB /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		6E65144C279B278700A183FB /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		6E834FE227A13399002DA578 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				6E0C35982795AB0A005FF0EF /* ModelUser.swift */,
 				6E0C358527956F08005FF0EF /* ChatModel.swift */,
+				6E4DA80727A3FD4B004F9FA3 /* MessageModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				6E0C35922795A284005FF0EF /* SectionHeader.swift in Sources */,
 				6E834FE527A136D2002DA578 /* UIImage+Ext.swift in Sources */,
 				6EE590A8279708ED00540898 /* String+Ext.swift in Sources */,
+				6E4DA80827A3FD4B004F9FA3 /* MessageModel.swift in Sources */,
 				6E43A253279464780053C86E /* ButtonFormView.swift in Sources */,
 				6E43A2322794480C0053C86E /* SceneDelegate.swift in Sources */,
 				6E43A24A279452740053C86E /* UIColor+Ext.swift in Sources */,
