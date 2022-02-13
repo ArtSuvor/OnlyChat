@@ -16,8 +16,20 @@ class ChatRequestViewController: UIViewController {
     private let aboutLabel = UILabel(text: "You have the opportunity to start a new chat.", font: .laoSangam17())
     private let acceptButton = UIButton(title: "Accept", titleColor: .white, backgroundColor: .black, font: .laoSangam20(), isShadow: true, cornerRadius: 10)
     private let denyButton = UIButton(title: "Deny", titleColor: #colorLiteral(red: 0.8352941176, green: 0.2, blue: 0.2, alpha: 1), backgroundColor: .mainWhite(), font: .laoSangam20(), isShadow: true, cornerRadius: 10)
+    private var chat: ChatModel
     
 //MARK: - Life cycle
+    init(chat: ChatModel) {
+        self.chat = chat
+        self.nameLabel.text = chat.friendUserName
+        imageView.sd_setImage(with: URL(string: chat.friendAvatarString))
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Error")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setViews()

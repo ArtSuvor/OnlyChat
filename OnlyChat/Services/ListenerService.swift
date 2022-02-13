@@ -49,4 +49,31 @@ class ListenerService {
         }
         return userListener
     }
+    
+    func waitingChatsObserve(chats: [ChatModel], completion: @escaping (Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
+        var chats = chats
+        let chatsRef = db.collection(["users", currentUserId, "waitingChats"].joined(separator: "/"))
+        let chatsListener = chatsRef.addSnapshotListener { snap, error in
+            guard let snap = snap else {
+                completion(.failure(error!))
+                return
+            }
+            snap.documentChanges.forEach { change in
+                guard let chat = ChatModel(document: change.document) else { return }
+                switch change.type {
+                case .added:
+                    guard !chats.contains(chat) else { return }
+                    chats.append(chat)
+                case .modified:
+                    guard let index = chats.firstIndex(of: chat) else { return }
+                    chats[index] = chat
+                case .removed:
+                    guard let index = chats.firstIndex(of: chat) else { return }
+                    chats.remove(at: index)
+                }
+            }
+            completion(.success(chats))
+        }
+        return chatsListener
+    }
 }

@@ -33,13 +33,13 @@ class StorageService {
                 completion(.failure(error!))
                 return
             }
-            self.avatarsRef.child(self.currentUserId).downloadURL(completion: { url, error in
+            self.avatarsRef.child(self.currentUserId).downloadURL { url, error in
                 guard let url = url else {
                     completion(.failure(error!))
                     return
                 }
                 completion(.success(url))
-            })
+            }
         }
     }
 }

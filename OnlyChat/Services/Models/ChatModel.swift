@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct ChatModel: Hashable, Decodable {
     let friendUserName: String
@@ -19,6 +20,25 @@ struct ChatModel: Hashable, Decodable {
         rep["friendId"] = friendId
         rep["lastMessage"] = lastMessage
         return rep
+    }
+    
+    init(friendUserName: String,  friendAvatarString: String, lastMessage: String, friendId: String) {
+        self.friendUserName = friendUserName
+        self.friendAvatarString = friendAvatarString
+        self.friendId = friendId
+        self.lastMessage = lastMessage
+    }
+    
+    init?(document: DocumentSnapshot) {
+        guard let data = document.data() else { return nil }
+        guard let userName = data["friendUserName"] as? String,
+              let avatar = data["friendAvatarString"] as? String,
+              let id = data["friendId"] as? String,
+              let lastMessage = data["lastMessage"] as? String else { return nil}
+        self.friendUserName = userName
+        self.friendAvatarString = avatar
+        self.friendId = id
+        self.lastMessage = lastMessage
     }
     
     func hash(into hasher: inout Hasher) {
