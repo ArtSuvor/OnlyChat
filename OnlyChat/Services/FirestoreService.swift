@@ -18,7 +18,11 @@ class FirebaseService {
         db.collection("users")
     }
     private var currentUser: ModelUser!
+    private var waitingChatRef: CollectionReference {
+        db.collection(["users", currentUser.id, "waitingChats"].joined(separator: "/"))
+    }
     
+//MARK: - GetUserData
     func getUserData(user: User, completion: @escaping (Result<ModelUser, Error>) -> Void) {
         let docRef = usersRef.document(user.uid)
         docRef.getDocument { snap, error in
@@ -35,6 +39,7 @@ class FirebaseService {
         }
     }
     
+//MARK: - SaveProfile
     func saveProfileWith(id: String, email: String, userName: String?, avatarImage: UIImage?, description: String?, sex: String?, completion: @escaping (Result<ModelUser, Error>) -> Void) {
         guard Validators.notEmpry(userName: userName, description: description, sex: sex) else {
             completion(.failure(UserError.notField))
@@ -65,6 +70,7 @@ class FirebaseService {
         }
     }
     
+//MARK: - CreateWaitingChat
     func createWaitingChat(message: String, receiver: ModelUser, completion: @escaping (Result<Void, Error>) -> Void) {
         let reference = db.collection(["users", receiver.id, "waitingChats"].joined(separator: "/"))
         let messageRef = reference.document(self.currentUser.id).collection("messages")
@@ -86,6 +92,57 @@ class FirebaseService {
                 }
                 completion(.success(Void()))
             }
+        }
+    }
+    
+//MARK: - RemoveWaitingChat
+    func deleteWaitingChat(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        waitingChatRef.document(chat.friendId).delete {[weak self] error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            self?.deleteMessages(chat: chat, completion: completion)
+        }
+    }
+    
+//MARK: - DeleteMessages
+    func deleteMessages(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        let ref = waitingChatRef.document(chat.friendId).collection("messages")
+        getWaitingChatMesseges(chat: chat) { result in
+            switch result {
+            case let .success(messages):
+                messages.forEach { message in
+                    guard let documentId = message.id else { return }
+                    let messageRef = ref.document(documentId)
+                    messageRef.delete { error in
+                        if let error = error {
+                            completion(.failure(error))
+                            return
+                        }
+                        completion(.success(Void()))
+                    }
+                }
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+//MARK: - GetMessages
+    func getWaitingChatMesseges(chat: ChatModel, completion: @escaping (Result<[MessageModel], Error>) -> Void) {
+        var messages = [MessageModel]()
+        let ref = waitingChatRef.document(chat.friendId).collection("messages")
+        ref.getDocuments { snap, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            snap?.documents.forEach { doc in
+                guard let message = MessageModel(document: doc) else { return }
+                messages.append(message)
+            }
+            completion(.success(messages))
         }
     }
 }

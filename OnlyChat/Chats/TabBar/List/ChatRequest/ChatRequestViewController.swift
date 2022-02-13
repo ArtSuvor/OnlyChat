@@ -17,6 +17,7 @@ class ChatRequestViewController: UIViewController {
     private let acceptButton = UIButton(title: "Accept", titleColor: .white, backgroundColor: .black, font: .laoSangam20(), isShadow: true, cornerRadius: 10)
     private let denyButton = UIButton(title: "Deny", titleColor: #colorLiteral(red: 0.8352941176, green: 0.2, blue: 0.2, alpha: 1), backgroundColor: .mainWhite(), font: .laoSangam20(), isShadow: true, cornerRadius: 10)
     private var chat: ChatModel
+    weak var delegate: WaitingChatsNavigation?
     
 //MARK: - Life cycle
     init(chat: ChatModel) {
@@ -35,6 +36,7 @@ class ChatRequestViewController: UIViewController {
         setViews()
         setConstraints()
         setStackView()
+        addTargets()
     }
     
     override func viewWillLayoutSubviews() {
@@ -58,6 +60,24 @@ class ChatRequestViewController: UIViewController {
         containterView.addSubview(aboutLabel)
         containterView.addSubview(acceptButton)
         containterView.addSubview(denyButton)
+    }
+    
+//MARK: - AddTargets
+    private func addTargets() {
+        denyButton.addTarget(self, action: #selector(denyButtonTapped), for: .touchUpInside)
+        acceptButton.addTarget(self, action: #selector(acceptButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func denyButtonTapped() {
+        self.dismiss(animated: true) {
+            self.delegate?.removeWaitingChat(chat: self.chat)
+        }
+    }
+    
+    @objc private func acceptButtonTapped() {
+        self.dismiss(animated: true) {
+            self.delegate?.changeToActive(chat: self.chat)
+        }
     }
 }
 

@@ -121,6 +121,24 @@ class ListViewController: UIViewController {
     }
 }
 
+//MARK: - WaitingChatsNavigation
+extension ListViewController: WaitingChatsNavigation {
+    func removeWaitingChat(chat: ChatModel) {
+        FirebaseService.shared.deleteWaitingChat(chat: chat) {[weak self] result in
+            switch result {
+            case .success:
+                self?.showAlert(with: "Success", and: "Chat deleted")
+            case let .failure(error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
+    }
+    
+    func changeToActive(chat: ChatModel) {
+        
+    }
+}
+
 //MARK: - DataSource
 extension ListViewController {    
     private func createDataSource() {
@@ -158,6 +176,7 @@ extension ListViewController: UICollectionViewDelegate {
         switch section {
         case .waitingChats:
             let chatRequestVC = ChatRequestViewController(chat: chat)
+            chatRequestVC.delegate = self
             present(chatRequestVC, animated: true)
         case .activeChats:
             print("adfgad")
