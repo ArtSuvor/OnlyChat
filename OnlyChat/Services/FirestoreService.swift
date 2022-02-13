@@ -55,21 +55,19 @@ class FirebaseService {
         
         var model = ModelUser(id: id, name: userName!, email: email, description: description!, sex: sex!, avatarStringUrl: "")
         
-        StorageService.shared.uploadPhoto(photo: avatarImage!) { result in
+        StorageService.shared.uploadPhoto(photo: avatarImage!) {[weak self] result in
             switch result {
             case let .success(url):
-                //TODO: не передает юрл
                 model.avatarStringURL = url.absoluteString
+                self?.usersRef.document(model.id).setData(model.representation) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(model))
+                    }
+                }
             case let .failure(error):
                 completion(.failure(error))
-            }
-        }
-        
-        usersRef.document(model.id).setData(model.representation) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(model))
             }
         }
     }
