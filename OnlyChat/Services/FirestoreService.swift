@@ -54,9 +54,9 @@ class FirebaseService {
         
         StorageService.shared.uploadPhoto(photo: avatarImage!) { result in
             switch result {
-            case .success(let url):
+            case let .success(url):
                 model.avatarStringURL = url.absoluteString
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
