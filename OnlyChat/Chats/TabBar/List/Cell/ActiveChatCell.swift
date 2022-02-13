@@ -32,9 +32,9 @@ class ActiveChatCell: UICollectionViewCell, ConfiguringCell {
 //MARK: - Configure
     func configure<U>(with value: U) where U: Hashable {
         guard let value = value as? ChatModel else { return }
-//        friendImageView.image = UIImage(named: value.userImageString)
-//        friendName.text = value.userName
-//        lastMessage.text = value.lastMessage
+        friendName.text = value.friendUserName
+        lastMessage.text = value.lastMessage
+        friendImageView.sd_setImage(with: URL(string: value.friendAvatarString))
     }
     
 //MARK: - SetUI

@@ -21,6 +21,9 @@ class FirebaseService {
     private var waitingChatRef: CollectionReference {
         db.collection(["users", currentUser.id, "waitingChats"].joined(separator: "/"))
     }
+    private var activeChatRef: CollectionReference {
+        db.collection(["users", currentUser.id, "activeChats"].joined(separator: "/"))
+    }
     
 //MARK: - GetUserData
     func getUserData(user: User, completion: @escaping (Result<ModelUser, Error>) -> Void) {
@@ -55,6 +58,7 @@ class FirebaseService {
         StorageService.shared.uploadPhoto(photo: avatarImage!) { result in
             switch result {
             case let .success(url):
+                //TODO: не передает юрл
                 model.avatarStringURL = url.absoluteString
             case let .failure(error):
                 completion(.failure(error))
@@ -143,6 +147,52 @@ class FirebaseService {
                 messages.append(message)
             }
             completion(.success(messages))
+        }
+    }
+    
+//MARK: - ChangeToActive
+    func changeToActive(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        getWaitingChatMesseges(chat: chat) {[weak self] result in
+            switch result {
+            case let .success(messages):
+                self?.deleteWaitingChat(chat: chat) { result in
+                    switch result {
+                    case .success:
+                        self?.createActiveChat(chat: chat, messages: messages) { result in
+                            switch result {
+                            case .success:
+                                completion(.success(Void()))
+                            case let .failure(error):
+                                completion(.failure(error))
+                            }
+                        }
+                    case let .failure(error):
+                        completion(.failure(error))
+                    }
+                }
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+//MARK: - CreateActiveChat
+    func createActiveChat(chat: ChatModel, messages: [MessageModel], completion: @escaping (Result<Void, Error>) -> Void) {
+        let messageRef = activeChatRef.document(chat.friendId).collection("messages")
+        activeChatRef.document(chat.friendId).setData(chat.representation) { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            messages.forEach { message in
+                messageRef.addDocument(data: message.representation) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                    completion(.success(Void()))
+                }
+            }
         }
     }
 }

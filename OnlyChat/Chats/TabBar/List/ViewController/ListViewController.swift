@@ -29,6 +29,7 @@ class ListViewController: UIViewController {
     private var activeChats = [ChatModel]()
     private var waitingChats = [ChatModel]()
     private var waitingChatListener: ListenerRegistration?
+    private var activeChatListener: ListenerRegistration?
     private let currentUser: ModelUser
     
 //MARK: - UI elements
@@ -56,11 +57,13 @@ class ListViewController: UIViewController {
         setupSearchBar()
         createDataSource()
         reloadData(with: nil)
-        addListener()
+        addWaitingListener()
+        addActiveListener()
     }
     
     deinit {
         waitingChatListener?.remove()
+        activeChatListener?.remove()
     }
     
 //MARK: - SetCollection
@@ -102,8 +105,8 @@ class ListViewController: UIViewController {
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
-//MARK: - AddListener
-    private func addListener() {
+//MARK: - AddWaitingListener
+    private func addWaitingListener() {
         waitingChatListener = ListenerService.shared.waitingChatsObserve(chats: waitingChats) {[weak self] result in
             guard let self = self else { return }
             switch result {
@@ -116,6 +119,19 @@ class ListViewController: UIViewController {
                 self.reloadData(with: nil)
             case let .failure(error):
                 self.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
+    }
+    
+//MARK: - AddActiveListener
+    private func addActiveListener() {
+        activeChatListener = ListenerService.shared.activeChatsObserve(chats: activeChats) {[weak self] result in
+            switch result {
+            case let .success(chats):
+                self?.activeChats = chats
+                self?.reloadData(with: nil)
+            case let .failure(error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
             }
         }
     }
@@ -135,7 +151,14 @@ extension ListViewController: WaitingChatsNavigation {
     }
     
     func changeToActive(chat: ChatModel) {
-        
+        FirebaseService.shared.changeToActive(chat: chat) {[weak self] result in
+            switch result {
+            case .success:
+                self?.showAlert(with: "Success", and: "")
+            case let .failure(error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -179,7 +202,7 @@ extension ListViewController: UICollectionViewDelegate {
             chatRequestVC.delegate = self
             present(chatRequestVC, animated: true)
         case .activeChats:
-            print("adfgad")
+           print("adf")
         }
     }
 }
