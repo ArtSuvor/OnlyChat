@@ -40,7 +40,7 @@ class ListViewController: UIViewController {
     init(user: ModelUser) {
         self.currentUser = user
         super.init(nibName: nil, bundle: nil)
-        title = currentUser.userName
+        title = currentUser.displayName
         
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
@@ -202,7 +202,8 @@ extension ListViewController: UICollectionViewDelegate {
             chatRequestVC.delegate = self
             present(chatRequestVC, animated: true)
         case .activeChats:
-           print("adf")
+            let chatVC = ChatViewController(user: currentUser, chat: chat)
+            self.navigationController?.pushViewController(chatVC, animated: true)
         }
     }
 }

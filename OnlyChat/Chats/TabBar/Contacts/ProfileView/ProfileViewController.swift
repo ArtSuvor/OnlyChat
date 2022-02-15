@@ -21,7 +21,7 @@ class ProfileViewController: UIViewController {
 //MARK: - Life cycle
     init(user: ModelUser) {
         self.user = user
-        self.nameLabel.text = user.userName
+        self.nameLabel.text = user.displayName
         self.aboutLabel.text = user.description
         
         let imageUrl = URL(string: user.avatarStringURL)

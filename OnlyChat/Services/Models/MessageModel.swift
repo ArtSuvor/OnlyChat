@@ -7,26 +7,32 @@
 
 import UIKit
 import FirebaseFirestore
+import MessageKit
 
-struct MessageModel: Hashable {
-    let content: String
-    let senderId: String
-    let senderName: String
-    let sentDate: Date
-    let id: String?
+struct MessageModel: Hashable, MessageType {
     
+//MARK: - Properties
+    var sender: SenderType
+    let content: String
+    var sentDate: Date
+    let id: String?
+    var messageId: String {
+        id ?? UUID().uuidString
+    }
+    var kind: MessageKind {
+        .text(content)
+    }
     var representation: [String: Any] {
         let rep: [String: Any] = [
             "created": sentDate,
-            "senderId": senderId,
-            "senderName": senderName,
+            "sender": sender,
             "content": content]
         return rep
     }
     
+//MARK: - Init
     init(user: ModelUser, content: String) {
-        self.senderId = user.id
-        self.senderName = user.userName
+        self.sender = user
         self.sentDate = Date()
         self.id = nil
         self.content = content
@@ -35,14 +41,21 @@ struct MessageModel: Hashable {
     init?(document: DocumentSnapshot) {
         guard let data = document.data() else { return nil }
         guard let sentDate = data["created"] as? Timestamp,
-              let senderId = data["senderId"] as? String,
-              let senderName = data["senderName"] as? String,
+              let sender = data["sender"] as? SenderType,
               let content = data["content"] as? String else { return nil }
         
-        self.senderId = senderId
-        self.senderName = senderName
+        self.sender = sender
         self.sentDate = sentDate.dateValue()
         self.id = document.documentID
         self.content = content
+    }
+    
+//MARK: - Methods
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(messageId)
+    }
+    
+    static func == (lhs: MessageModel, rhs: MessageModel) -> Bool {
+        lhs.messageId == rhs.messageId
     }
 }

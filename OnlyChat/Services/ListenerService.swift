@@ -36,7 +36,7 @@ class ListenerService {
                 switch diff.type {
                 case.added:
                     guard !users.contains(user),
-                          user.id != self?.currentUserId else { return }
+                          user.senderId != self?.currentUserId else { return }
                     users.append(user)
                 case .modified:
                     guard let index = users.firstIndex(of: user) else { return }

@@ -19,10 +19,10 @@ class FirebaseService {
     }
     private var currentUser: ModelUser!
     private var waitingChatRef: CollectionReference {
-        db.collection(["users", currentUser.id, "waitingChats"].joined(separator: "/"))
+        db.collection(["users", currentUser.senderId, "waitingChats"].joined(separator: "/"))
     }
     private var activeChatRef: CollectionReference {
-        db.collection(["users", currentUser.id, "activeChats"].joined(separator: "/"))
+        db.collection(["users", currentUser.senderId, "activeChats"].joined(separator: "/"))
     }
     
 //MARK: - GetUserData
@@ -59,7 +59,7 @@ class FirebaseService {
             switch result {
             case let .success(url):
                 model.avatarStringURL = url.absoluteString
-                self?.usersRef.document(model.id).setData(model.representation) { error in
+                self?.usersRef.document(model.senderId).setData(model.representation) { error in
                     if let error = error {
                         completion(.failure(error))
                     } else {
@@ -74,15 +74,15 @@ class FirebaseService {
     
 //MARK: - CreateWaitingChat
     func createWaitingChat(message: String, receiver: ModelUser, completion: @escaping (Result<Void, Error>) -> Void) {
-        let reference = db.collection(["users", receiver.id, "waitingChats"].joined(separator: "/"))
-        let messageRef = reference.document(self.currentUser.id).collection("messages")
+        let reference = db.collection(["users", receiver.senderId, "waitingChats"].joined(separator: "/"))
+        let messageRef = reference.document(self.currentUser.senderId).collection("messages")
         
         let message = MessageModel(user: currentUser, content: message)
-        let chat = ChatModel(friendUserName: currentUser.userName,
+        let chat = ChatModel(friendUserName: currentUser.displayName,
                              friendAvatarString: currentUser.avatarStringURL,
                              lastMessage: message.content,
-                             friendId: currentUser.id)
-        reference.document(currentUser.id).setData(chat.representation) { error in
+                             friendId: currentUser.senderId)
+        reference.document(currentUser.senderId).setData(chat.representation) { error in
             if let error = error {
                 completion(.failure(error))
                 return

@@ -36,7 +36,7 @@ class ContactsViewController: UIViewController {
     init(user: ModelUser) {
         self.currentUser = user
         super.init(nibName: nil, bundle: nil)
-        title = currentUser.userName
+        title = currentUser.displayName
         
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]

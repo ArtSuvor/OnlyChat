@@ -34,7 +34,7 @@ class ContactsCell: UICollectionViewCell, ConfiguringCell {
 //MARK: - Config
     func configure<U>(with value: U) where U: Hashable {
         guard let value = value as? ModelUser else { return }
-        userNameLabel.text = value.userName
+        userNameLabel.text = value.displayName
         
         let imageUrl = URL(string: value.avatarStringURL)
         userImageView.sd_setImage(with: imageUrl, completed: nil)
