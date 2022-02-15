@@ -40,6 +40,7 @@ class ChatViewController: MessagesViewController {
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.backgroundView.backgroundColor = .mainWhite()
         messageInputBar.inputTextView.placeholderTextColor = #colorLiteral(red: 0.7098040581, green: 0.7098040581, blue: 0.7098040581, alpha: 1)
+        messageInputBar.inputTextView.textColor = .black
         messageInputBar.inputTextView.backgroundColor = .white
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 14, left: 30, bottom: 14, right: 36)
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 14, left: 36, bottom: 14, right: 36)
