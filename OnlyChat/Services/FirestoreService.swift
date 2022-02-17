@@ -193,4 +193,35 @@ class FirebaseService {
             }
         }
     }
+    
+//MARK: - SendMessage
+    func sendMessage(chat: ChatModel, message: MessageModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        let friendRef = usersRef.document(chat.friendId).collection("activeChats").document(currentUser.senderId)
+        let friendMessageRef = friendRef.collection("messages")
+        let myMessageRef = usersRef.document(currentUser.senderId).collection("activeChats").document(chat.friendId).collection("messages")
+        let chatForFriend = ChatModel(friendUserName: currentUser.displayName,
+                                      friendAvatarString: currentUser.avatarStringURL,
+                                      lastMessage: message.content,
+                                      friendId: currentUser.senderId)
+        
+        friendRef.setData(chatForFriend.representation) { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            friendMessageRef.addDocument(data: message.representation) { error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                myMessageRef.addDocument(data: message.representation) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                    completion(.success(Void()))
+                }
+            }
+        }
+    }
 }
