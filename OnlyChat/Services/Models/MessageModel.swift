@@ -65,3 +65,10 @@ struct MessageModel: Hashable, MessageType {
         lhs.messageId == rhs.messageId
     }
 }
+
+//MARK: - Comparable
+extension MessageModel: Comparable {
+    static func < (lhs: MessageModel, rhs: MessageModel) -> Bool {
+        lhs.sentDate < rhs.sentDate
+    }
+}
