@@ -8,6 +8,7 @@
 import UIKit
 import MessageKit
 import InputBarAccessoryView
+import FirebaseFirestore
 
 class ChatViewController: MessagesViewController {
     
@@ -15,6 +16,7 @@ class ChatViewController: MessagesViewController {
     private let user: ModelUser
     private let chat: ChatModel
     private var messages: [MessageModel] = []
+    private var messageListener: ListenerRegistration?
     
 //MARK: - Init
     init(user: ModelUser, chat: ChatModel) {
@@ -27,6 +29,10 @@ class ChatViewController: MessagesViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        messageListener?.remove()
     }
     
 //MARK: - Life cycle
@@ -42,6 +48,17 @@ class ChatViewController: MessagesViewController {
         messages.append(message)
         messages.sort()
         messagesCollectionView.reloadData()
+        scrollToLastMessage(message: message)
+    }
+    
+    private func scrollToLastMessage(message: MessageModel) {
+        let isLatestMessage = messages.firstIndex(of: message) == (messages.count - 1)
+        let shouldScrollToBottom = messagesCollectionView.isAtBottom && isLatestMessage
+        if shouldScrollToBottom {
+            DispatchQueue.main.async {
+                self.messagesCollectionView.scrollToLastItem()
+            }
+        }
     }
     
     private func setDelegate() {
@@ -55,6 +72,17 @@ class ChatViewController: MessagesViewController {
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
             layout.textMessageSizeCalculator.incomingAvatarSize = .zero
+        }
+    }
+    
+    private func setListener() {
+        messageListener = ListenerService.shared.messagesObserver(chat: chat) {[weak self] result in
+            switch result {
+            case let .success(message):
+                self?.insertNewMessage(message: message)
+            case let .failure(error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
+            }
         }
     }
 }
@@ -112,12 +140,31 @@ extension ChatViewController: MessagesDataSource {
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         1
     }
+    
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if indexPath.item % 4 == 0 {
+            return  NSAttributedString(
+                string: MessageKitDateFormatter.shared.string(from: message.sentDate),
+                attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 10),
+                             NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        } else {
+            return nil
+        }
+    }
 }
 
 //MARK: - MessageDelegate
 extension ChatViewController: MessagesLayoutDelegate {
     func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         CGSize(width: 0, height: 8)
+    }
+    
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        if indexPath.item % 4 == 0 {
+            return CGFloat(30)
+        } else {
+            return CGFloat(0)
+        }
     }
 }
 
@@ -140,10 +187,19 @@ extension ChatViewController: MessagesDisplayDelegate {
     }
 }
 
+//MARK: - InputBarAccessoryViewDelegate
 extension ChatViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let message = MessageModel(user: user, content: text)
-        insertNewMessage(message: message)
+        
+        FirebaseService.shared.sendMessage(chat: chat, message: message) {[weak self] result in
+            switch result {
+            case .success:
+                self?.messagesCollectionView.scrollToLastItem()
+            case let .failure(error):
+                self?.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
         inputBar.inputTextView.text = ""
     }
 }
