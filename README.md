@@ -1,4 +1,4 @@
-# Чат курсу SwiftBook.
+# Чат по курсу SwiftBook.
 
 Работа с UICollectionViewCompositionalLayout, UICollectionViewDiffableDataSource
 
