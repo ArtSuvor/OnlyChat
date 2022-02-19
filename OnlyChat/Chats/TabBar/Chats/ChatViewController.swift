@@ -43,6 +43,7 @@ class ChatViewController: MessagesViewController {
         changeLayout()
     }
     
+//MARK: - InsertMessage
     private func insertNewMessage(message: MessageModel) {
         guard !messages.contains(message) else { return }
         messages.append(message)
@@ -51,6 +52,7 @@ class ChatViewController: MessagesViewController {
         scrollToLastMessage(message: message)
     }
     
+//MARK: - ScrollToLastMessage
     private func scrollToLastMessage(message: MessageModel) {
         let isLatestMessage = messages.firstIndex(of: message) == (messages.count - 1)
         let shouldScrollToBottom = messagesCollectionView.isAtBottom && isLatestMessage
@@ -61,6 +63,30 @@ class ChatViewController: MessagesViewController {
         }
     }
     
+//MARK: - SendPhoto
+    private func sendPhoto(image: UIImage) {
+        StorageService.shared.uploadImageMessage(photo: image, to: chat) {[weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(url):
+                var message = MessageModel(user: self.user, image: image)
+                message.downloadURL = url
+                
+                FirebaseService.shared.sendMessage(chat: self.chat, message: message) { result in
+                    switch result {
+                    case .success:
+                        self.messagesCollectionView.scrollToLastItem()
+                    case let .failure(error):
+                        self.showAlert(with: "Error", and: error.localizedDescription)
+                    }
+                }
+            case let .failure(error):
+                self.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
+    }
+    
+//MARK: - SetDelegate
     private func setDelegate() {
         messageInputBar.delegate = self
         messagesCollectionView.messagesDataSource = self
@@ -68,20 +94,37 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
     }
     
+//MARK: - ChangeLayout
     private func changeLayout() {
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
             layout.textMessageSizeCalculator.incomingAvatarSize = .zero
+            layout.photoMessageSizeCalculator.outgoingAvatarSize = .zero
+            layout.photoMessageSizeCalculator.incomingAvatarSize = .zero
         }
     }
     
+//MARK: - SetListener
     private func setListener() {
         messageListener = ListenerService.shared.messagesObserver(chat: chat) {[weak self] result in
+            guard let self = self else { return }
             switch result {
-            case let .success(message):
-                self?.insertNewMessage(message: message)
+            case var .success(message):
+                if let url = message.downloadURL {
+                    StorageService.shared.downloadImage(url: url) { result in
+                        switch result {
+                        case let .success(image):
+                            message.image = image
+                            self.insertNewMessage(message: message)
+                        case let .failure(error):
+                            self.showAlert(with: "Error", and: error.localizedDescription)
+                        }
+                    }
+                } else {
+                    self.insertNewMessage(message: message)
+                }
             case let .failure(error):
-                self?.showAlert(with: "Error", and: error.localizedDescription)
+                self.showAlert(with: "Error", and: error.localizedDescription)
             }
         }
     }
@@ -111,6 +154,7 @@ extension ChatViewController {
         messageInputBar.layer.shadowOffset = CGSize(width: 0, height: 4)
         
         configureSendButton()
+        configCameraIcon()
     }
     
     private func configureSendButton() {
@@ -120,6 +164,33 @@ extension ChatViewController {
         messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 6, right: 30)
         messageInputBar.sendButton.setSize(CGSize(width: 48, height: 48), animated: false)
         messageInputBar.middleContentViewPadding.right = -38
+    }
+    
+    private func configCameraIcon() {
+        let cameraItem = InputBarButtonItem(type: .system)
+        cameraItem.tintColor = #colorLiteral(red: 0.747739017, green: 0.5907533169, blue: 0.9361074567, alpha: 1)
+        let cameraImage = UIImage(systemName: "camera")
+        cameraItem.image = cameraImage
+        
+        cameraItem.addTarget(self, action: #selector(cameraButtonTapped), for: .primaryActionTriggered)
+        cameraItem.setSize(CGSize(width: 60, height: 30), animated: false)
+        
+        messageInputBar.leftStackView.alignment = .center
+        messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
+        messageInputBar.setStackViewItems([cameraItem], forStack: .left, animated: false)
+    }
+    
+//MARK: - CameraButtonAction
+    @objc private func cameraButtonTapped() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        } else {
+            picker.sourceType = .photoLibrary
+        }
+        present(picker, animated: true)
     }
 }
 
@@ -201,5 +272,15 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             }
         }
         inputBar.inputTextView.text = ""
+    }
+}
+
+//MARK: - UIimagePickerDeleagte
+extension ChatViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+        
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        sendPhoto(image: image)
     }
 }

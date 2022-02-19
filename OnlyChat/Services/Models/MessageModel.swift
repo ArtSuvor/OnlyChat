@@ -9,6 +9,13 @@ import UIKit
 import FirebaseFirestore
 import MessageKit
 
+struct ImageItem: MediaItem {
+    var url: URL?
+    var image: UIImage?
+    var placeholderImage: UIImage
+    var size: CGSize
+}
+
 struct MessageModel: Hashable, MessageType {
     struct Sender: SenderType {
         var senderId: String
@@ -20,18 +27,31 @@ struct MessageModel: Hashable, MessageType {
     let content: String
     var sentDate: Date
     let id: String?
+    var image: UIImage? = nil
+    var downloadURL: URL? = nil
     var messageId: String {
         id ?? UUID().uuidString
     }
     var kind: MessageKind {
-        .text(content)
+        if let image = image {
+            let mediaItem = ImageItem(url: nil, image: nil, placeholderImage: image, size: image.size)
+            return .photo(mediaItem)
+        } else {
+            return .text(content)
+        }
     }
     var representation: [String: Any] {
-        let rep: [String: Any] = [
+        var rep: [String: Any] = [
             "created": sentDate,
             "senderId": sender.senderId,
-            "senderName": sender.displayName,
-            "content": content]
+            "senderName": sender.displayName]
+        
+        if let url = downloadURL {
+            rep["url"] = url.absoluteString
+        } else {
+            rep["content"] = content
+        }
+        
         return rep
     }
     
@@ -43,20 +63,37 @@ struct MessageModel: Hashable, MessageType {
         self.content = content
     }
     
+    init(user: ModelUser, image: UIImage) {
+        self.sender = user
+        self.sentDate = Date()
+        self.id = nil
+        self.image = image
+        self.content = ""
+    }
+    
     init?(document: DocumentSnapshot) {
         guard let data = document.data() else { return nil }
         guard let sentDate = data["created"] as? Timestamp,
               let senderId = data["senderId"] as? String,
-              let senderName = data["senderName"] as? String,
-              let content = data["content"] as? String else { return nil }
+              let senderName = data["senderName"] as? String else { return nil }
         
         self.sender = Sender(senderId: senderId, displayName: senderName)
         self.sentDate = sentDate.dateValue()
         self.id = document.documentID
-        self.content = content
+        
+        if let content = data["content"] as? String {
+            self.content = content
+            self.downloadURL = nil
+        } else if let urlString = data["url"] as? String,
+                  let url = URL(string: urlString) {
+            self.downloadURL = url
+            self.content = ""
+        } else {
+            return nil
+        }
     }
     
-//MARK: - Methods
+//MARK: - Hashable
     func hash(into hasher: inout Hasher) {
         hasher.combine(messageId)
     }
