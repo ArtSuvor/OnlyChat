@@ -2,5 +2,6 @@
 
 Работа с UICollectionViewCompositionalLayout, UICollectionViewDiffableDataSource
 
-## Библиотеки добавлены через SPM
-Firebase (Firestore, Storage, Auth), MessageKit
+## Используемые библиотеки 
+### Добавлены через SPM
+Firebase (Firestore, Storage, Auth), GoogleSignIn, MessageKit, SDWebImage
